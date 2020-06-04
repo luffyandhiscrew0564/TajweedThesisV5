@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.6">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/cellfie-2.1.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/code-generation-2.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/com.clarkparsia.protege.plugin.pellet-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/csv-export-plugin-1.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/existentialquery-2.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/explanation-workbench-3.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/ontograf-2.0.3.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/org.coode.dlquery-4.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/org.semanticweb.hermit-1.4.3.456.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/owldoc-3.0.3.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/owlviz-5.0.3.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/rdf-library-3.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/sparql-query-plugin-3.0.0.jar"/>
+	<classpathentry kind="lib" path="F:/Protege-5.5.0/plugins/swrltab-plugin-2.0.6.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
