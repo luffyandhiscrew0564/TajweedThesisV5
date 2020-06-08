@@ -70,7 +70,7 @@ public class tajweedV5 {
 	}
 
 	public static void ReadFile() {
-		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\Surah Falak.txt";
+		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\SurahQadr.txt";
 		File file = new File(fileName);
 
 		int VerseNo = 4 - 1; // if zero remove minus 1
@@ -167,6 +167,7 @@ public class tajweedV5 {
 		Harakat Sakina = tajweedV5Factory.getHarakat(baseUrl+'ْ');
 		Harakat Meem = tajweedV5Factory.getHarakat(baseUrl+'ۢ');
 		Letter Noon = tajweedV5Factory.getLetter(baseUrl+"ن");
+		Letter BigMeem = tajweedV5Factory.getLetter(baseUrl+ "م");
 		NoonSakinahAndTanween Iqlab = tajweedV5Factory.getNoonSakinahAndTanween(baseUrl + "Iqlab");
 		Collection<? extends LetterOccurrence> letterOccurrences = tajweedV5Factory.getAllLetterOccurrenceInstances(); //Its an Array taking all the LO made from parsestr() getting LO from the ontology
 		for (LetterOccurrence LO : letterOccurrences) {
@@ -180,12 +181,20 @@ public class tajweedV5 {
 				} else if (harakats.contains(Meem)) { 
 					LO.removeInvolveHarakat(Meem);
 					LO.addInvolveHarakat(Sakina);
-					RuleOccurrence iqlabRule = tajweedV5Factory.createRuleOccurrence(baseUrl + "Iqlab");
-					iqlabRule.addHasRuleType(Iqlab);
-					iqlabRule.addOccurAt(LO);
+					//RuleOccurrence iqlabRule = tajweedV5Factory.createRuleOccurrence(baseUrl + "Iqlab");
+					//iqlabRule.addHasRuleType(Iqlab);
+					//iqlabRule.addOccurAt(LO);
 				}
 			}
-
+			if (involvedLetters.contains(BigMeem)) {
+				
+				Collection harakats =LO.getInvolveHarakat();
+				if (harakats.isEmpty()) {
+					LO.addInvolveHarakat(Sakina);
+				}
+				
+			}
+		
 		}
 	}
 
@@ -224,7 +233,7 @@ public class tajweedV5 {
 
 	public static void WriteToDatabase() {
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("113_4.owl");
+		File file = new File("97_4.owl");
 
 		try {
 			ontology = manager.loadOntologyFromOntologyDocument(file);
@@ -262,7 +271,7 @@ public class tajweedV5 {
 
 	}
 	
-	// No able to find way to use RO.gethasRuleType() to find the rule. So using object.toString as work around 
+	// No able to find way to use RO.gethasRuleType() to find the rule. So using object.toString as work around  
 	public static void insertdata(Integer SurahNo, Integer VerseNo, String RuleType, Integer LetterPosition) {
 		Pattern p = Pattern.compile("(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakinah)");
 		Matcher m = p.matcher(RuleType);
