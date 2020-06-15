@@ -70,10 +70,10 @@ public class tajweedV5 {
 	}
 
 	public static void ReadFile() {
-		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\SurahQadr.txt";
+		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\SurahBayyina.txt";
 		File file = new File(fileName);
 
-		int VerseNo = 4 - 1; // if zero remove minus 1
+		int VerseNo = 2 - 1; // if zero remove minus 1
 		try {
 			//BufferedReader reader = new BufferedReader(new FileReader(file));
 			String currentLineVar = FileUtils.readLines(file).get(VerseNo);
@@ -105,6 +105,8 @@ public class tajweedV5 {
 		Letter LI = null;
 		LetterOccurrence LOI= null;
 		LetterOccurrence PreviousLOI = null;
+		Harakat tanweenzaber =tajweedV5Factory.getHarakat(baseUrl+" ً");
+		Letter Alif = tajweedV5Factory.getLetter(baseUrl+ "ا");
 
 		//String OccuranceFormat = "%sLO%03d_V%03d_W%03d_S%03d";
 		String OccuranceFormat = "%sS%03d_V%03d_W%03d_LO%03d";
@@ -117,20 +119,23 @@ public class tajweedV5 {
 				if (c[i] == 'ـ') {
 					System.out.println("Empty char -- skipping");
 					continue;
+					
+				
 				}
+			
 				System.out.println("Character = " + c[i]);
 
 
 				if (tajweedV5Factory.getLetter(baseUrl + c[i]) != null) {
 					// was there a previous letter? store it in PreviousLOI
-					if (LOI != null) { // read hW yah to starting --if se bahir nikl aoo 
+					if (LOI != null) { 
 						PreviousLOI = LOI;
 					}
 
 					LI = tajweedV5Factory.getLetter(baseUrl+c[i]);
 					String LetterOccurrenceID = String.format(OccuranceFormat, baseUrl,Integer.parseInt(surahNo),Integer.parseInt(verseNo),wordNo + 1, i + 1 );
 					LOI = tajweedV5Factory.createLetterOccurrence(LetterOccurrenceID);
-					LOI.addInvolveLetter(LI);//is lO mein add hogaya HW
+					LOI.addInvolveLetter(LI);
 					LOI.addInvolveSurahNo(Integer.parseInt(surahNo));
 					//	LOI.addInvolveWordNo(Integer.parseInt(wordNo));
 					LOI.addInvolveWord((word));
@@ -140,7 +145,7 @@ public class tajweedV5 {
 
 					LOI.addInvolveVerseNo(Integer.parseInt(verseNo));
 					if (PreviousLOI != null) {
-						PreviousLOI.addFollowedBy(LOI); //next waly pr foolwed kray ga kun k hum ne oper jo cond laggi ha woh ture hogi yahni null nhi hoga..
+						PreviousLOI.addFollowedBy(LOI); 
 						LOI.addPrecededBy(PreviousLOI);
 					}
 
@@ -152,7 +157,21 @@ public class tajweedV5 {
 					LOI.addInvolveHarakat(HI);
 					//LOI.addHasPosition(position);
 					LOI.addHasHaraktPosition(position);
-				}
+					int nextCharIdx = i + 1;
+					int nextTwoCharIdx = i + 2;
+					if (!(nextCharIdx >= c.length)) {
+						if (c[i] == 'ً' ) {
+							if (c[nextCharIdx] == 'ا' ) {
+								i = i + 1;
+								System.out.println("Next character is alif");	
+							} else if (c[nextCharIdx] == 'ۢ' && !(nextTwoCharIdx >= c.length) && c[nextTwoCharIdx] == 'ا') {
+								i = i + 2;
+								System.out.println("Skipping small meem and alif");
+							}
+						}
+						
+					}
+				} 
 
 				position++;
 				System.out.println("LO = " + LOI);
@@ -168,10 +187,13 @@ public class tajweedV5 {
 		Harakat Meem = tajweedV5Factory.getHarakat(baseUrl+'ۢ');
 		Letter Noon = tajweedV5Factory.getLetter(baseUrl+"ن");
 		Letter BigMeem = tajweedV5Factory.getLetter(baseUrl+ "م");
-		NoonSakinahAndTanween Iqlab = tajweedV5Factory.getNoonSakinahAndTanween(baseUrl + "Iqlab");
+	//	Harakat tanweenzaber =tajweedV5Factory.getHarakat(baseUrl+" ً");
+	//	Letter Alif = tajweedV5Factory.getLetter(baseUrl+ "ا");
+		//NoonSakinahAndTanween Iqlab = tajweedV5Factory.getNoonSakinahAndTanween(baseUrl + "Iqlab");
 		Collection<? extends LetterOccurrence> letterOccurrences = tajweedV5Factory.getAllLetterOccurrenceInstances(); //Its an Array taking all the LO made from parsestr() getting LO from the ontology
 		for (LetterOccurrence LO : letterOccurrences) {
-			Collection involvedLetters = LO.getInvolveLetter(); //getting all involve letter for LO
+			Collection involvedLetters = LO.getInvolveLetter();//getting all involve letter for LO
+			
 			if (involvedLetters.contains(Noon)) { //if the involve letter is noon
 				Collection harakats = LO.getInvolveHarakat(); //Array for all harakat of LO
 				if (harakats.isEmpty()) { // if No harakat
@@ -233,7 +255,7 @@ public class tajweedV5 {
 
 	public static void WriteToDatabase() {
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("97_4.owl");
+		File file = new File("98_2.owl");
 
 		try {
 			ontology = manager.loadOntologyFromOntologyDocument(file);
@@ -288,11 +310,12 @@ public class tajweedV5 {
 				LetterPosition + "," +
 				VerseNo + "," +
 				SurahNo + ")";
-		//System.out.println("Will execute: " + Statement);
+		System.out.println("Will execute: " + Statement);
 		try {
+			System.out.println(st);
 			st.executeUpdate(Statement);
 		} catch (Exception e) { 
-			System.err.println("Got an exception! "); 
+			System.err.println("Got an exception! " + e); 
 			System.err.println(e.getMessage()); 
 			System.exit(0);
 		}
