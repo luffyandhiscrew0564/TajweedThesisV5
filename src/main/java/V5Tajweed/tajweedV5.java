@@ -38,11 +38,12 @@ public class tajweedV5 {
 	private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
 	static Connection conn;
 	static Statement st;
+	private static SWRLRuleEngine swrlRuleEngine;
 
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
-		InitializeTajweedEngine();
+		//InitializeTajweedEngine();
 		try {
 			createConnection();
 		} catch (ClassNotFoundException e) {
@@ -53,7 +54,7 @@ public class tajweedV5 {
 			e.printStackTrace();
 		}
 		ReadFile();
-		//WriteToDatabase();
+		
 		
 
 	}
@@ -64,7 +65,8 @@ public class tajweedV5 {
 
 		try {
 			ontology = manager.loadOntologyFromOntologyDocument(file);
-			tajweedV5Factory = new V5TajweedFactory(ontology);	
+			tajweedV5Factory = new V5TajweedFactory(ontology);
+			swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
 
 		} 
 		catch (OWLOntologyCreationException e1) {
@@ -119,13 +121,14 @@ catch (FileNotFoundException e) {
 	
 */
 	public static void ReadFile() {
-		String surahFileName = "SurahAlaq";
-		String fileName = "C:\\Users\\thesis\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
+		String surahFileName = "SurahBaqra102";
+		String fileName = "‪C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 
 		//int VerseNo = 1 - 1; // if zero remove minus 1
 		try {
 			for (String currentLineVar : FileUtils.readLines(file)) {
+				InitializeTajweedEngine();
 				//BufferedReader reader = new BufferedReader(new FileReader(file));
 				//String currentLineVar = FileUtils.readLines(file).get(VerseNo);
 				//while ((currentLineVar = reader.readLine())!=null) {
@@ -139,11 +142,13 @@ catch (FileNotFoundException e) {
 				String[] words = verse.split(" ");
 				ParseStr(surahNo, verseNo, words) ;
 				AdjustHarakats();
+				System.out.println("Running Engine --- ");
+				RunEngine();
+				System.out.println("Running Save --- ");
+				saveont(surahNo, verseNo);
+				WriteToDatabase(surahNo, verseNo);
 			}
-			System.out.println("Running Engine --- ");
-			RunEngine();
-			System.out.println("Running Save --- ");
-			saveont(surahFileName);
+			
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -272,15 +277,15 @@ public static void AdjustHarakats() {
 
 public static void RunEngine() {
 
-	SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
+	//SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
 	swrlRuleEngine.infer();   
 }
 
-public static void saveont(String surahNo)
+public static void saveont(String surahNo, String verseNo)
 
 {
 	manager = OWLManager.createOWLOntologyManager();
-	File fileformated = new File(surahNo +".owl");
+	File fileformated = new File(surahNo + "_" + verseNo + ".owl");
 	try {
 		ontology.saveOntology(new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileformated));
 	} catch (FileNotFoundException e) {
@@ -296,15 +301,15 @@ public static void createConnection() throws SQLException, ClassNotFoundExceptio
 {
 
 	Class.forName("com.mysql.jdbc.Driver");
-	String  url = "jdbc:mysql://localhost:3306/Tajweed?characterEncoding=utf8"; 
+	String  url = "jdbc:mysql://localhost:3306/tajweed?characterEncoding=utf8"; 
 	conn = DriverManager.getConnection(url,"root", ""); 
 	st = conn.createStatement(); 
 	System.out.println("connection created");
 }
 
-public static void WriteToDatabase() {
+public static void WriteToDatabase(String surahNo, String verseNo) {
 	OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-	File file = new File("92_1.owl");
+	File file = new File(surahNo+"_"+verseNo+".owl");
 
 	try {
 		ontology = manager.loadOntologyFromOntologyDocument(file);
@@ -321,9 +326,9 @@ public static void WriteToDatabase() {
 
 			//Collection letterOcc = ro.getOccurAt();
 			Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
-			Integer surahNo = ro.getInvolveSurahNo().iterator().next();
-			Integer verseNo = ro.getInvolveVerseNo().iterator().next();
-			insertdata(surahNo, verseNo, ro.toString(), letterPosition);
+			Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
+			Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
+			insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
 			//Collection ruleTypes = ro.getHasRuleType();
 			//Iterator ruleItr = ruleTypes.iterator();
 			//while (ruleItr.hasNext()) {
