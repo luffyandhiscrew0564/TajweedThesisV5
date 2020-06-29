@@ -121,8 +121,8 @@ catch (FileNotFoundException e) {
 	
 */
 	public static void ReadFile() {
-		String surahFileName = "SurahBaqra102";
-		String fileName = "‪C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
+		String surahFileName = "SurahAdduha";
+		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 
 		//int VerseNo = 1 - 1; // if zero remove minus 1
@@ -301,7 +301,7 @@ public static void createConnection() throws SQLException, ClassNotFoundExceptio
 {
 
 	Class.forName("com.mysql.jdbc.Driver");
-	String  url = "jdbc:mysql://localhost:3306/tajweed?characterEncoding=utf8"; 
+	String  url = "jdbc:mysql://localhost:3306/newtajweed?characterEncoding=utf8"; 
 	conn = DriverManager.getConnection(url,"root", ""); 
 	st = conn.createStatement(); 
 	System.out.println("connection created");

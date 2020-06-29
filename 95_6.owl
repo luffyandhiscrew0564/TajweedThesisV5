@@ -158,9 +158,7 @@ Declaration(NamedIndividual(:ۢ))
 Declaration(NamedIndividual(:ۥ))
 Declaration(NamedIndividual(:ۦ))
 Declaration(NamedIndividual(:ۭ))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3>))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198>))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e>))
+Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0>))
 Declaration(AnnotationProperty(term:created))
 Declaration(AnnotationProperty(term:creator))
 Declaration(AnnotationProperty(term:description))
@@ -383,13 +381,11 @@ ClassAssertion(:Rules :Iqlab)
 
 ClassAssertion(:NoonSakinahAndTanween :Izhar)
 ClassAssertion(:Rules :Izhar)
-ObjectPropertyAssertion(:hasRuleOccurrence :Izhar <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e>)
 
 # Individual: :IzharShafawi (:IzharShafawi)
 
 ClassAssertion(:MeemSakinah :IzharShafawi)
 ClassAssertion(:Rules :IzharShafawi)
-ObjectPropertyAssertion(:hasRuleOccurrence :IzharShafawi <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198>)
 
 # Individual: :MostCompleteGhunnah (:MostCompleteGhunnah)
 
@@ -400,7 +396,7 @@ ClassAssertion(:Rules :MostCompleteGhunnah)
 
 ClassAssertion(:Qalqalah :Qalqalah)
 ClassAssertion(:Rules :Qalqalah)
-ObjectPropertyAssertion(:hasRuleOccurrence :Qalqalah <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3>)
+ObjectPropertyAssertion(:hasRuleOccurrence :Qalqalah <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0>)
 
 # Individual: :S095_V006_W001_LO001 (:S095_V006_W001_LO001)
 
@@ -1234,32 +1230,14 @@ ClassAssertion(:Item :ۦ)
 ClassAssertion(Annotation(rdfs:comment "Low meem") :Harakat :ۭ)
 ClassAssertion(:Item :ۭ)
 
-# Individual: <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> (<http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3>)
+# Individual: <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> (<http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0>)
 
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> :Qalqalah)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> :S095_V006_W007_LO003)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> "65"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> "95"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##a40d904f_58f1_437a_8dcf_84a5853bc9c3> "6"^^xsd:integer)
-
-# Individual: <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> (<http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198>)
-
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> :IzharShafawi)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> :S095_V006_W009_LO003)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> "79"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> "95"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##1761deb6_3e3e_4372_9846_8e5201fe2198> "6"^^xsd:integer)
-
-# Individual: <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> (<http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e>)
-
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> :Izhar)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> :S095_V006_W007_LO005)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> "67"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> "95"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##401c1592_6d7e_4b91_9229_9ba772b5747e> "6"^^xsd:integer)
+ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0>)
+ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> :Qalqalah)
+ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> :S095_V006_W007_LO003)
+DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> "65"^^xsd:integer)
+DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> "95"^^xsd:integer)
+DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##07aa9e4a_ac21_4b25_b4b6_17dd7351a9f0> "6"^^xsd:integer)
 
 
 DifferentIndividuals(:ء :ا :ب :ت :ث :ج :ح :خ :د :ذ :ر :ز :س :ش :ص :ض :ط :ظ :ع :غ :ف :ق :ك :ل :م :ن :ه :و :ي)
@@ -1273,9 +1251,6 @@ DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:c
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "IkhfaShafawi"^^xsd:string) Annotation(rdfs:label "S9"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :م) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ْ) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IkhfaShafawiLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) ObjectPropertyAtom(:hasRuleType Variable(:R) :IkhfaShafawi) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "tanween Iqlab"^^xsd:string) Annotation(rdfs:label "S12"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) Variable(:p)) ClassAtom(:Letter Variable(:p)) ObjectPropertyAtom(:involveHarakat Variable(:LO) Variable(:T)) ClassAtom(:Tanween Variable(:T)) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IqlabLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Iqlab) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P))))
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "iqlab"^^xsd:string) Annotation(rdfs:label "S1"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :ن) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ْ) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IqlabLetter Variable(:L)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Iqlab) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
-DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "Tanween Izhar"^^xsd:string) Annotation(rdfs:label "S13"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) Variable(:p)) ClassAtom(:Letter Variable(:p)) ObjectPropertyAtom(:involveHarakat Variable(:LO) Variable(:T)) ClassAtom(:Tanween Variable(:T)) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IzharLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Izhar) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P))))
-DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "izhar"^^xsd:string) Annotation(rdfs:label "S2"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :ن) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ْ) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IzharLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Izhar) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
-DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "IzharShafawi"^^xsd:string) Annotation(rdfs:label "S11"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :م) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ْ) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IzharShafawiLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :IzharShafawi) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P))))
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "qalqalah"^^xsd:string) Annotation(rdfs:label "S8"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) Variable(:L)) ClassAtom(:QalqalahLetter Variable(:L)) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ْ) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Qalqalah) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "MostCompleteGhunnah"^^xsd:string) Annotation(rdfs:label "S6"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :م) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ّ) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :MostCompleteGhunnah) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
 DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment "MostCompleteGhunnah"^^xsd:string) Annotation(rdfs:label "S7"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) :ن) ObjectPropertyAtom(:involveHarakat Variable(:LO) :ّ) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :MostCompleteGhunnah) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P)) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V))))
