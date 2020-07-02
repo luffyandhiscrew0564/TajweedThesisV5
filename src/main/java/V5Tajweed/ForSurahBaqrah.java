@@ -1,31 +1,32 @@
 package V5Tajweed;
-	import java.io.BufferedReader;
-	import java.io.File;
-	import java.io.FileNotFoundException;
-	import java.io.FileOutputStream;
-	import java.io.FileReader;
-	import java.io.IOException;
-	import java.lang.reflect.Field;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Array;
 import java.sql.Connection;
-	import java.sql.DriverManager;
-	import java.sql.SQLException;
-	import java.sql.Statement;
-	import java.util.Collection;
-	import java.util.Iterator;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
-	import java.util.regex.Pattern;
+import java.util.regex.Pattern;
 
-	import org.apache.commons.io.FileUtils;
-	import org.drools.core.rule.Collect;
-	import org.protege.owl.codegeneration.WrappedIndividual;
-	import org.semanticweb.owlapi.apibinding.OWLManager;
-	import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
-	import org.semanticweb.owlapi.model.OWLOntology;
-	import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-	import org.semanticweb.owlapi.model.OWLOntologyManager;
-	import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.apache.commons.io.FileUtils;
+import org.drools.core.rule.Collect;
+import org.protege.owl.codegeneration.WrappedIndividual;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.SWRLRuleEngine;
 import org.swrlapi.exceptions.SWRLBuiltInException;
@@ -35,48 +36,58 @@ import org.swrlapi.parser.SWRLParseException;
 import com.github.jsonldjava.shaded.com.google.common.collect.Lists;
 
 import V5TajweedFactoryOnto.*;
-	import V5TajweedFactoryOnto.impl.*;
-	public class Swrl {
-		private static OWLOntologyManager manager;
-		private static OWLOntology ontology;
-		private static  V5TajweedFactory tajweedV5Factory;
-		private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
-		static Connection conn;
-		static Statement st;
-		private static SWRLRuleEngine swrlRuleEngine;
+import V5TajweedFactoryOnto.impl.*;
+public class ForSurahBaqrah {
+	private static OWLOntology ontology;
+	private static  V5TajweedFactory tajweedV5Factory;
+	private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
+	static Connection conn;
+	static Statement st;
+	private static SWRLRuleEngine swrlRuleEngine;
 
-		public static void main(String[] args) 
-		{
-			ReadFile();
-
+	public static void main(String[] args) 
+	{
+		try {
+			createConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		public static void InitializeTajweedEngine() 
-		{
-			OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-			File file = new File("FinalTajweedRulesWithoutRules.owl");
-
-			try {
-				ontology = manager.loadOntologyFromOntologyDocument(file);
-				tajweedV5Factory = new V5TajweedFactory(ontology);
-				swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
-
-			} 
-			catch (OWLOntologyCreationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		ReadFile();
 		
-		public static void ReadFile() {
-			String surahFileName = "Surah73Verse20";
-			String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
-			File file = new File(fileName);
-			String[][] ruleList = allRules();
-			InitializeTajweedEngine();
-			try {
-				for ( String[] ruleDefinition : ruleList) {
-					//InitializeTajweedEngine();
+
+	}
+	public static void InitializeTajweedEngine() 
+	{
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		File file = new File("FinalTajweedRulesWithoutRules.owl");
+
+		try {
+			ontology = manager.loadOntologyFromOntologyDocument(file);
+			tajweedV5Factory = new V5TajweedFactory(ontology);
+			swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology);
+		} 
+		catch (OWLOntologyCreationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public static void ReadFile() {
+		String surahFileName = "SurahBaqra";
+		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
+		File file = new File(fileName);
+		String[][] ruleList = allRules();
+
+		try {
+			for ( String[] ruleDefinition : ruleList) {
+				for (String currentLineVar : FileUtils.readLines(file)) {
+					InitializeTajweedEngine();	
 					try {
+						System.out.println("CREATE RULE " + ruleDefinition[1]);
 						SWRLRule rule = swrlRuleEngine.createSWRLRule(ruleDefinition[1], ruleDefinition[2]);
 					} catch (SWRLParseException e) {
 						// TODO Auto-generated catch block
@@ -85,45 +96,33 @@ import V5TajweedFactoryOnto.*;
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					for (String currentLineVar : FileUtils.readLines(file)) {
-						//InitializeTajweedEngine();
-						if (currentLineVar.isEmpty()) {
-							//	continue;
-						}
-						String[] line = currentLineVar.split("\\|");
-						String surahNo = line[0];
-						String verseNo = line[1];
-						String verse = line[2];
-						String[] words = verse.split(" ");
-						ParseStr(surahNo, verseNo, words) ;
-						AdjustHarakats();
-						System.out.println("Running Engine is running for --- "+ ruleDefinition[1]);
-						RunEngine(); 
-						System.out.println("Rules Inference Save for --- "+ ruleDefinition[1]); 
-						
-						saveont(surahNo,verseNo, ruleDefinition[0], ruleDefinition[1]);
-						WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
-						
-					}
-					//swrlRuleEngine.deleteSWRLRule(ruleDefinition[0]);
+					String[] line = currentLineVar.split("\\|");
+					String surahNo = line[0];
+					String verseNo = line[1];
+					String verse = line[2];
+					String[] words = verse.split(" ");
+					ParseStr(surahNo, verseNo, words) ;
+					AdjustHarakats();
+					System.out.println("Running Engine is running for --- "+ ruleDefinition[1]);
+					RunEngine(); 
+					System.out.println("Rules Inference Save for --- "+ ruleDefinition[1]);
+					saveont(surahNo,verseNo, ruleDefinition[0], ruleDefinition[1]);
+					WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
 				}
-				
-				
+
 			}
-			catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		}	
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+	}	
 	public static void ParseStr(String surahNo, String verseNo, String[] words) {
 		Letter LI = null;
 		LetterOccurrence LOI= null;
 		LetterOccurrence PreviousLOI = null;
 		Harakat tanweenzaber =tajweedV5Factory.getHarakat(baseUrl+" ً");
 		Letter Alif = tajweedV5Factory.getLetter(baseUrl+ "ا");
-
-		//String OccuranceFormat = "%sLO%03d_V%03d_W%03d_S%03d";
 		String OccuranceFormat = "%sS%03d_V%03d_W%03d_LO%03d";
 		int position = 0; //if starting with 1 change it to 0
 
@@ -131,13 +130,6 @@ import V5TajweedFactoryOnto.*;
 			String word = words[wordNo];
 			char c [] = word.toCharArray();
 			for (int i = 0; i < c.length; i++) {
-				/*
-				 * if (c[i] == 'ـ') { System.out.println("Empty char -- skipping"); continue;
-				 * 
-				 * 
-				 * }
-				 */
-
 				System.out.println("Character = " + c[i]);
 
 
@@ -146,7 +138,6 @@ import V5TajweedFactoryOnto.*;
 					if (LOI != null) { 
 						PreviousLOI = LOI;
 					}
-
 					LI = tajweedV5Factory.getLetter(baseUrl+c[i]);
 					String LetterOccurrenceID = String.format(OccuranceFormat, baseUrl,Integer.parseInt(surahNo),Integer.parseInt(verseNo),wordNo + 1, i + 1 );
 					LOI = tajweedV5Factory.createLetterOccurrence(LetterOccurrenceID);
@@ -156,8 +147,6 @@ import V5TajweedFactoryOnto.*;
 					LOI.addInvolveWord((word));
 					//LOI.addHasPosition(position);
 					LOI.addHasLetterPosition(position);
-
-
 					LOI.addInvolveVerseNo(Integer.parseInt(verseNo));
 					if (PreviousLOI != null) {
 						PreviousLOI.addFollowedBy(LOI); 
@@ -192,8 +181,6 @@ import V5TajweedFactoryOnto.*;
 			}
 			position++;
 		} // end-for
-
-
 	} 
 
 	public static void AdjustHarakats() {
@@ -222,9 +209,6 @@ import V5TajweedFactoryOnto.*;
 				} else if (harakats.contains(Meem)) { 
 					LO.removeInvolveHarakat(Meem);
 					LO.addInvolveHarakat(Sakina);
-					//RuleOccurrence iqlabRule = tajweedV5Factory.createRuleOccurrence(baseUrl + "Iqlab");
-					//iqlabRule.addHasRuleType(Iqlab);
-					//iqlabRule.addOccurAt(LO);
 				}
 			}
 			if (involvedLetters.contains(BigMeem)) {
@@ -238,14 +222,16 @@ import V5TajweedFactoryOnto.*;
 		}
 	}
 
+
 	public static void RunEngine() {
 
-		swrlRuleEngine.infer();   
+		swrlRuleEngine.infer();
+		System.out.println("All rules are infered");
 	}
 
 	public static String[][] allRules() {
-		
-		
+
+
 		String[] rule1 = new String[]{"R001","IkhfaRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Ikhfa) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule2 = new String[]{"R002","IqlabRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IqlabLetter(?L) ^ hasLetterPosition(?LO, ?P) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Iqlab) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule3 = new String[]{"R003","IdghamShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamShafawiLetter(?L) ^ hasLetterPosition(?LO, ?P) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghaamShafawi) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
@@ -261,16 +247,16 @@ import V5TajweedFactoryOnto.*;
 		String[] rule13 = new String[]{"R013","IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 
 		//String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13};
-		String[][] rules  = {rule1};
+		String[][] rules  = {rule1, rule2, rule3};
 		return rules;
 	}
-	
-	public static void saveont(String surahNo, String verseNo, String rule, String ruleDefinition)
+
+	public static void saveont(String surahNo, String verseNo, String ruleDefinition, String rule)
 
 	{
-		manager = OWLManager.createOWLOntologyManager();
-		
-		File fileformated = new File("S"+surahNo + "_" + "V"+verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+
+		File fileformated = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
 		try {
 			ontology.saveOntology(new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileformated));
 		} catch (FileNotFoundException e) {
@@ -286,21 +272,23 @@ import V5TajweedFactoryOnto.*;
 	{
 
 		Class.forName("com.mysql.jdbc.Driver");
-		String  url = "jdbc:mysql://localhost:3306/fewsurahs?characterEncoding=utf8"; 
+		String  url = "jdbc:mysql://localhost:3306/testing?characterEncoding=utf8"; 
 		conn = DriverManager.getConnection(url,"root", ""); 
 		st = conn.createStatement(); 
 		System.out.println("connection created");
 	}
 
-	public static void WriteToDatabase(String surahNo, String verseNo, String rule, String ruleDefinition ) {
+	public static void WriteToDatabase(String surahNo, String verseNo,String ruleDefinition , String rule ) {
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("S"+surahNo + "_" + "V"+verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		File file = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		System.out.println("Reading file to Write to db");
 
 		try {
-			ontology = manager.loadOntologyFromOntologyDocument(file);
-			tajweedV5Factory = new V5TajweedFactory(ontology);
+			OWLOntology singleOntology = manager.loadOntologyFromOntologyDocument(file);
+			V5TajweedFactory tajweedFactory = new V5TajweedFactory(singleOntology);
 
-			Collection ruleocc = tajweedV5Factory.getAllRuleOccurrenceInstances();
+			System.out.println("File  found");
+			Collection ruleocc = tajweedFactory.getAllRuleOccurrenceInstances();
 			Iterator itr=ruleocc.iterator();
 
 			while ( itr.hasNext() ) {
@@ -308,19 +296,10 @@ import V5TajweedFactoryOnto.*;
 
 				System.out.println(" Printing all the RO"+ ro.toString());
 				System.out.println("Instances of RO"+ ro.getOwlIndividual().toStringID());
-
-				//Collection letterOcc = ro.getOccurAt();
 				Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
 				Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
 				Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
 				insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
-				//Collection ruleTypes = ro.getHasRuleType();
-				//Iterator ruleItr = ruleTypes.iterator();
-				//while (ruleItr.hasNext()) {
-				//	Object ruleType = ruleItr.next();
-				//	System.out.println(ruleType);
-				//	insertdata(surahNo, verseNo, ruleType.toString(), letterPosition);
-				//	}
 			}
 
 			System.out.println("file read");

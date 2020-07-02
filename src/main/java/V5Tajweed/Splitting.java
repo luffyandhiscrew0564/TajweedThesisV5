@@ -11,8 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,16 +27,15 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semanticweb.owlapi.model.SWRLRule;
 import org.swrlapi.core.SWRLRuleEngine;
-import org.swrlapi.exceptions.SWRLBuiltInException;
 import org.swrlapi.factory.SWRLAPIFactory;
-import org.swrlapi.parser.SWRLParseException;
+
+import com.google.common.collect.Lists;
 
 import V5TajweedFactoryOnto.*;
 import V5TajweedFactoryOnto.impl.*;
 
-public class FewSurahs  {
+public class Splitting {
 	private static OWLOntologyManager manager;
 	private static OWLOntology ontology;
 	private static  V5TajweedFactory tajweedV5Factory;
@@ -64,7 +65,7 @@ public class FewSurahs  {
 	public static void InitializeTajweedEngine() 
 	{
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("FinalTajweedRulesWithoutRules.owl");
+		File file = new File("FinalTajweedRules.owl");
 
 		try {
 			ontology = manager.loadOntologyFromOntologyDocument(file);
@@ -78,14 +79,16 @@ public class FewSurahs  {
 		}
 	}
 	public static void ReadFile() {
-		String surahFileName = "Surah73Verse20";
+		String surahFileName = "SurahBaqra102";
 		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 
 		//int VerseNo = 1 - 1; // if zero remove minus 1
 		try {
 			for (String currentLineVar : FileUtils.readLines(file)) {
-				InitializeTajweedEngine();
+				//BufferedReader reader = new BufferedReader(new FileReader(file));
+				//String currentLineVar = FileUtils.readLines(file).get(VerseNo);
+				//while ((currentLineVar = reader.readLine())!=null) {
 				if (currentLineVar.isEmpty()) {
 					//	continue;
 				}
@@ -94,13 +97,33 @@ public class FewSurahs  {
 				String verseNo = line[1];
 				String verse = line[2];
 				String[] words = verse.split(" ");
-				ParseStr(surahNo, verseNo, words) ;
-				AdjustHarakats();
-				System.out.println("Running Engine --- ");
-				RunEngine();
-				System.out.println("Running Save --- ");
-				saveont(surahNo, verseNo);
-				WriteToDatabase(surahNo, verseNo);
+				
+				if (words.length > 70) {
+					InitializeTajweedEngine();
+					List<List<String>> splitWords = Lists.partition(Arrays.asList(words), 7);
+					int lastLOID = 0;
+					for (List wordList : splitWords) {
+						String[] subWords = new String[wordList.size()];
+						wordList.toArray(subWords);
+						//System.out.println(wordList);
+						lastLOID = ParseStr(surahNo, verseNo, subWords, lastLOID) ;
+						AdjustHarakats();
+						System.out.println("Running Engine --- " + lastLOID);
+						RunEngine();
+						System.out.println("Running Save --- ");
+					}
+					saveont(surahNo, verseNo);
+					WriteToDatabase(surahNo, verseNo);
+				} else {
+					//InitializeTajweedEngine();
+					//ParseStr(surahNo, verseNo, words, 0) ;
+					//AdjustHarakats();
+					//System.out.println("Running Engine --- ");
+					//RunEngine();
+					//System.out.println("Running Save --- ");
+					//saveont(surahNo, verseNo);
+					//WriteToDatabase(surahNo, verseNo);
+				}
 			}
 			
 		}
@@ -109,27 +132,44 @@ public class FewSurahs  {
 			e1.printStackTrace();
 		}
 	}	
-public static void ParseStr(String surahNo, String verseNo, String[] words) {
+public static int ParseStr(String surahNo, String verseNo, String[] words, int lastLetterOccurencePos) {
 	Letter LI = null;
 	LetterOccurrence LOI= null;
 	LetterOccurrence PreviousLOI = null;
 	Harakat tanweenzaber =tajweedV5Factory.getHarakat(baseUrl+" ً");
 	Letter Alif = tajweedV5Factory.getLetter(baseUrl+ "ا");
+
+	//String OccuranceFormat = "%sLO%03d_V%03d_W%03d_S%03d";
 	String OccuranceFormat = "%sS%03d_V%03d_W%03d_LO%03d";
 	int position = 0; //if starting with 1 change it to 0
 
+	int nextID = lastLetterOccurencePos;
 	for (int wordNo = 0; wordNo < words.length; wordNo++) {
 		String word = words[wordNo];
 		char c [] = word.toCharArray();
 		for (int i = 0; i < c.length; i++) {
+			nextID = nextID + i;
+			if (nextID == 0) {
+				nextID = 1;
+			}
+			/*
+			 * if (c[i] == 'ـ') { System.out.println("Empty char -- skipping"); continue;
+			 * 
+			 * 
+			 * }
+			 */
+
 			System.out.println("Character = " + c[i]);
+
+
 			if (tajweedV5Factory.getLetter(baseUrl + c[i]) != null) {
 				// was there a previous letter? store it in PreviousLOI
 				if (LOI != null) { 
 					PreviousLOI = LOI;
 				}
+
 				LI = tajweedV5Factory.getLetter(baseUrl+c[i]);
-				String LetterOccurrenceID = String.format(OccuranceFormat, baseUrl,Integer.parseInt(surahNo),Integer.parseInt(verseNo),wordNo + 1, i + 1 );
+				String LetterOccurrenceID = String.format(OccuranceFormat, baseUrl,Integer.parseInt(surahNo),Integer.parseInt(verseNo),wordNo + 1, nextID );
 				LOI = tajweedV5Factory.createLetterOccurrence(LetterOccurrenceID);
 				LOI.addInvolveLetter(LI);
 				LOI.addInvolveSurahNo(Integer.parseInt(surahNo));
@@ -175,7 +215,7 @@ public static void ParseStr(String surahNo, String verseNo, String[] words) {
 		position++;
 	} // end-for
 
-
+	return nextID;
 } 
 
 public static void AdjustHarakats() {
@@ -219,35 +259,7 @@ public static void AdjustHarakats() {
 
 public static void RunEngine() {
 
-	SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
-	
-	
-		 
-		try {
-			//SWRLRule rule = swrlRuleEngine.createSWRLRule("IkhfaRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Ikhfa) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule1 = swrlRuleEngine.createSWRLRule("IqlabRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IqlabLetter(?L) ^ hasLetterPosition(?LO, ?P) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Iqlab) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule2 = swrlRuleEngine.createSWRLRule("IdghamShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamShafawiLetter(?L) ^ hasLetterPosition(?LO, ?P) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghaamShafawi) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//--SWRLRule rule3 = swrlRuleEngine.createSWRLRule("TanweenIqlabRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?p) ^ Letter(?p) ^ involveHarakat(?LO, ?T) ^ Tanween(?T) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IqlabLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Iqlab) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V) ^ hasLetterPosition(?R, ?P)");
-			SWRLRule rule4 = swrlRuleEngine.createSWRLRule("TanweenIdghamWithGhunnahRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?p) ^ Letter(?p) ^ involveHarakat(?LO, ?T) ^ Tanween(?T) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghamWithGhunnah) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V) ^ hasLetterPosition(?R, ?P)");
-			//SWRLRule rule5 = swrlRuleEngine.createSWRLRule("TanweenIdghamWithoutGhunnahRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?p) ^ Letter(?p) ^ involveHarakat(?LO, ?T) ^ Tanween(?T) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithoutGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghaamWithoutGhunnah) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V) ^ hasLetterPosition(?R, ?P)");
-			//SWRLRule rule6 = swrlRuleEngine.createSWRLRule("TanweenIkhfaRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?p) ^ Letter(?p) ^ involveHarakat(?LO, ?T) ^ Tanween(?T) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Ikhfa) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V) ^ hasLetterPosition(?R, ?P)");
-			//SWRLRule rule7 = swrlRuleEngine.createSWRLRule("IdghamWithGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghamWithGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule8 = swrlRuleEngine.createSWRLRule("IdghamwithoutGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithoutGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghaamWithoutGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule9 = swrlRuleEngine.createSWRLRule("MostCompleteGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ّ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, MostCompleteGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule10 = swrlRuleEngine.createSWRLRule("MostCompleteGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ّ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, MostCompleteGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule11 = swrlRuleEngine.createSWRLRule("Qalqalah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?L) ^ QalqalahLetter(?L) ^ involveHarakat(?LO, ْ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Qalqalah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-			//SWRLRule rule12 = swrlRuleEngine.createSWRLRule("IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)");
-
-		
-		
-		} catch (SWRLParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SWRLBuiltInException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+	//SWRLRuleEngine swrlRuleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology); 
 	swrlRuleEngine.infer();   
 }
 
@@ -271,7 +283,7 @@ public static void createConnection() throws SQLException, ClassNotFoundExceptio
 {
 
 	Class.forName("com.mysql.jdbc.Driver");
-	String  url = "jdbc:mysql://localhost:3306/fewSurahs?characterEncoding=utf8"; 
+	String  url = "jdbc:mysql://localhost:3306/newtajweed?characterEncoding=utf8"; 
 	conn = DriverManager.getConnection(url,"root", ""); 
 	st = conn.createStatement(); 
 	System.out.println("connection created");

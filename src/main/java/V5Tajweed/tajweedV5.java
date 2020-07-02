@@ -74,52 +74,6 @@ public class tajweedV5 {
 			e1.printStackTrace();
 		}
 	}
-/*
-	public static void ReadFile() {
-		//String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\SurahAshsharah.txt";
-		File fileName = new File ("C:\\Users\\thesis\\Desktop\\TxtFiles\\SurahAlaq.txt");
-		//File file = new File(fileName);
-		//int VerseNo = 6 - 1; // if zero remove minus 1
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fileName));
-			//String currentLineVar = FileUtils.readLines(file).get(VerseNo);
-			//while ((currentLineVar = reader.readLine())!=null) {
-			//if (currentLineVar.isEmpty()) {
-			//	continue;
-			String str;
-			try {
-				while ((str = reader.readLine())!=null)
-
-				{
-		
-		//String[] line = currentLineVar.split("\\|");
-		String[] line = str.split("\\|");	
-		String surahNo = line[0];
-		String verseNo = line[1];
-		String verse = line[2];
-		String[] words = verse.split(" ");
-		ParseStr(surahNo, verseNo, words) ;
-		AdjustHarakats();
-		System.out.println("Running Engine --- ");
-		RunEngine();
-		System.out.println("Running Save --- ");
-		
-
-		//}
-	}
-			}
-	catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-		}
-catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-}
-	
-*/
 	public static void ReadFile() {
 		String surahFileName = "SurahAdduha";
 		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
@@ -127,6 +81,7 @@ catch (FileNotFoundException e) {
 
 		//int VerseNo = 1 - 1; // if zero remove minus 1
 		try {
+			//InitializeTajweedEngine();
 			for (String currentLineVar : FileUtils.readLines(file)) {
 				InitializeTajweedEngine();
 				//BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -140,6 +95,7 @@ catch (FileNotFoundException e) {
 				String verseNo = line[1];
 				String verse = line[2];
 				String[] words = verse.split(" ");
+				
 				ParseStr(surahNo, verseNo, words) ;
 				AdjustHarakats();
 				System.out.println("Running Engine --- ");
