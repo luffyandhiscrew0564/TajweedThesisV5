@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -77,18 +78,47 @@ public class SurahName {
 	}
 
 	public static void ReadFile() {
-		String surahFileName = "Quran";
-		String fileName = "‪C:\\Users\\Ramsha\\Desktop\\QURAN\\" + surahFileName + ".txt";
+		String surahFileName = "سورة الكوثر";
+		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 		String[][] ruleList = allRules();
 		
-		String surahToRead = "1";
-		String verseToRead = "";
-
+		List<String> surahsToRead = new ArrayList();
+		surahsToRead.add("108");
+		
+		List<String> versesToRead = new ArrayList();
+		//versesToRead.add("1");
+		//versesToRead.add("3");
+		List<String> versesToSkip = new ArrayList();
+		versesToSkip.add("1");
+		versesToSkip.add("3");
+		
 		try {
 			for ( String[] ruleDefinition : ruleList) {
 				for (String currentLineVar : FileUtils.readLines(file)) {
-					InitializeTajweedEngine();	
+					String[] line = currentLineVar.split("\\|");
+					String surahNo = line[0];
+					String verseNo = line[1];
+					String verse = line[2];
+					if (!surahsToRead.isEmpty()) {
+						if (!surahsToRead.contains(surahNo)) {
+							System.out.println("Skipping Surah " + surahNo);
+							continue;
+						}
+						if (!versesToRead.isEmpty()) {
+							if (!versesToRead.contains(verseNo)) {
+								System.out.println("Skipping Verse " + verseNo);
+								continue;
+							}
+						}
+					}
+					if (!versesToSkip.isEmpty()) {
+						if(versesToSkip.contains(verseNo)) {
+							System.out.println("Skipping Verse " + verseNo);
+							continue;
+						}
+					}
+					InitializeTajweedEngine();
 					try {
 						System.out.println("CREATE RULE " + ruleDefinition[1]);
 						SWRLRule rule = swrlRuleEngine.createSWRLRule(ruleDefinition[1], ruleDefinition[2]);
@@ -98,24 +128,6 @@ public class SurahName {
 					} catch (SWRLBuiltInException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-					String[] line = currentLineVar.split("\\|");
-					String surahNo = line[0];
-					String verseNo = line[1];
-					String verse = line[2];
-					if (!surahToRead.isEmpty()) {
-						if (surahNo != surahToRead) {
-							continue;
-						}
-						if (!verseToRead.isEmpty()) {
-							if (verseNo != verseToRead) {
-								continue;
-							}
-						}
-						if (Integer.parseInt(surahNo) > Integer.parseInt(surahToRead)) {
-							System.out.println("Ending loop - already read surah we wanted");
-							break; // end loop if looking at surah more than one to read
-						}
 					}
 					String[] words = verse.split(" ");
 					ParseStr(surahNo, verseNo, words) ;

@@ -16,9 +16,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import V5TajweedFactoryOnto.RuleOccurrence;
 import V5TajweedFactoryOnto.V5TajweedFactory;
 public class ConnectSQL {
-	private static OWLOntologyManager manager;
-	private static OWLOntology ontology;
-	private static  V5TajweedFactory tajweedV5Factory;
+
 	static Connection conn;
 	static Statement st;
 	public static void main(String[] args)  {
@@ -42,35 +40,14 @@ public class ConnectSQL {
 		st = conn.createStatement(); 
 		System.out.println("connection created");
 	}
-	public static void WriteToDatabase(String surahNo, String verseNo,String ruleDefinition , String rule ) 
+	public static void createConnectionwrite() throws SQLException, ClassNotFoundException
 	{
-		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
-		System.out.println("Reading file to Write to db");
-
-		try {
-			ontology = manager.loadOntologyFromOntologyDocument(file);
-			tajweedV5Factory = new V5TajweedFactory(ontology);
-			System.out.println("File  found");
-			Collection ruleocc = tajweedV5Factory.getAllRuleOccurrenceInstances();
-			Iterator itr=ruleocc.iterator();
-			while ( itr.hasNext() ) {
-				RuleOccurrence ro = (RuleOccurrence) itr.next();
-				System.out.println(" Printing all the RO"+ ro.toString());
-				System.out.println("Instances of RO"+ ro.getOwlIndividual().toStringID());
-				Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
-				Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
-				Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
-				insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
-			}
-			System.out.println("file read");
-		}
-		catch (OWLOntologyCreationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Class.forName("com.mysql.jdbc.Driver");
+		String  url = "jdbc:mysql://localhost:3306/testing?characterEncoding=utf8"; 
+		conn = DriverManager.getConnection(url,"root", ""); 
+		st = conn.createStatement(); 
+		System.out.println("connection created");
 	}
-
 	public static void insertdata(Integer SurahNo, Integer VerseNo, String RuleType, Integer LetterPosition)
 	{
 		Pattern p = Pattern.compile("(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakinah)");

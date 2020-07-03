@@ -78,7 +78,7 @@ public class FewSurahs  {
 		}
 	}
 	public static void ReadFile() {
-		String surahFileName = "Surah73Verse20";
+		String surahFileName = "سورة الكوثر";
 		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 
@@ -93,6 +93,9 @@ public class FewSurahs  {
 				String surahNo = line[0];
 				String verseNo = line[1];
 				String verse = line[2];
+				if (surahNo =="108" && verseNo=="2") {
+					continue;
+				}
 				String[] words = verse.split(" ");
 				ParseStr(surahNo, verseNo, words) ;
 				AdjustHarakats();
