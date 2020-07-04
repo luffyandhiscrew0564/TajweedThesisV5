@@ -24,6 +24,9 @@ import org.drools.core.rule.Collect;
 import org.protege.owl.codegeneration.WrappedIndividual;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
+import org.semanticweb.owlapi.io.OWLXMLOntologyFormat;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -38,7 +41,8 @@ import com.github.jsonldjava.shaded.com.google.common.collect.Lists;
 
 import V5TajweedFactoryOnto.*;
 import V5TajweedFactoryOnto.impl.*;
-public class SurahName {
+public class Outputfile {
+	private static OWLOntologyManager manager;
 	private static OWLOntology ontology;
 	private static  V5TajweedFactory tajweedV5Factory;
 	private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
@@ -78,13 +82,13 @@ public class SurahName {
 	}
 
 	public static void ReadFile() {
-		String surahFileName = "Quran";
+		String surahFileName = "سورة الكوثر";
 		String fileName = "C:\\Users\\Ramsha\\Desktop\\TxtFiles\\" + surahFileName + ".txt";
 		File file = new File(fileName);
 		String[][] ruleList = allRules();
 		
 		List<String> surahsToRead = new ArrayList();
-		//surahsToRead.add("");
+		surahsToRead.add("108");
 		
 		List<String> versesToRead = new ArrayList();
 		//versesToRead.add("1");
@@ -281,21 +285,22 @@ public class SurahName {
 	}
 
 	public static void saveont(String surahNo, String verseNo, String ruleDefinition, String rule)
-
 	{
-		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		ontology = tajweedV5Factory.getOwlOntology();
 
-		File fileformated = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		File fileformated = new File("OutputFile.owl");
+		OWLDocumentFormat format = manager.getOntologyFormat(ontology);
+		OWLXMLOntologyFormat owlxmlFormat = new OWLXMLOntologyFormat();
+		if (format.isPrefixOWLOntologyFormat()) {
+			owlxmlFormat.copyPrefixesFrom(format.asPrefixOWLOntologyFormat());
+		}
 		try {
-			ontology.saveOntology(new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileformated));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			manager.saveOntology(ontology, owlxmlFormat, IRI.create(fileformated.toURI()));
+		} catch (OWLOntologyStorageException e) {
+			e.getMessage();
 			e.printStackTrace();
 		}
-		catch (OWLOntologyStorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 	public static void createConnection() throws SQLException, ClassNotFoundException
 	{
