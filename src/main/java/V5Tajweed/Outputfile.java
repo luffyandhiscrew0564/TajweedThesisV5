@@ -139,8 +139,8 @@ public class Outputfile {
 					System.out.println("Running Engine is running for --- "+ ruleDefinition[1]);
 					RunEngine(); 
 					System.out.println("Rules Inference Save for --- "+ ruleDefinition[1]);
-					saveont(surahNo,verseNo, ruleDefinition[0], ruleDefinition[1]);
-					WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
+					saveont();
+					WriteToDatabase();
 				}
 
 			}
@@ -284,23 +284,22 @@ public class Outputfile {
 		return rules;
 	}
 
-	public static void saveont(String surahNo, String verseNo, String ruleDefinition, String rule)
+	public static void saveont()
 	{
-		ontology = tajweedV5Factory.getOwlOntology();
+	
+	OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 
-		File fileformated = new File("OutputFile.owl");
-		OWLDocumentFormat format = manager.getOntologyFormat(ontology);
-		OWLXMLOntologyFormat owlxmlFormat = new OWLXMLOntologyFormat();
-		if (format.isPrefixOWLOntologyFormat()) {
-			owlxmlFormat.copyPrefixesFrom(format.asPrefixOWLOntologyFormat());
-		}
-		try {
-			manager.saveOntology(ontology, owlxmlFormat, IRI.create(fileformated.toURI()));
-		} catch (OWLOntologyStorageException e) {
-			e.getMessage();
-			e.printStackTrace();
-		}
-
+	File fileformated = new File("OutputFile.owl");
+	try {
+		ontology.saveOntology(new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileformated));
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	catch (OWLOntologyStorageException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	public static void createConnection() throws SQLException, ClassNotFoundException
 	{
@@ -312,9 +311,9 @@ public class Outputfile {
 		System.out.println("connection created");
 	}
 
-	public static void WriteToDatabase(String surahNo, String verseNo,String ruleDefinition , String rule ) {
+	public static void WriteToDatabase() {
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		File file = new File("OutputFile.owl");
 		System.out.println("Reading file to Write to db");
 
 		try {

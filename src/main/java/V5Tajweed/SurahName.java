@@ -49,14 +49,15 @@ public class SurahName {
 	public static void main(String[] args) 
 	{
 		try {
-			createConnection();
-		} catch (ClassNotFoundException e) {
+			ConnectSQL.createConnection();
+		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		
 		ReadFile();
 		
 
@@ -84,10 +85,10 @@ public class SurahName {
 		String[][] ruleList = allRules();
 		
 		List<String> surahsToRead = new ArrayList();
-		//surahsToRead.add("");
+		surahsToRead.add("3");
 		
 		List<String> versesToRead = new ArrayList();
-		//versesToRead.add("1");
+		versesToRead.add("10");
 		//versesToRead.add("3");
 		List<String> versesToSkip = new ArrayList();
 		//versesToSkip.add("1");
@@ -152,6 +153,7 @@ public class SurahName {
 		LetterOccurrence PreviousLOI = null;
 		Harakat tanweenzaber =tajweedV5Factory.getHarakat(baseUrl+" ً");
 		Letter Alif = tajweedV5Factory.getLetter(baseUrl+ "ا");
+		Letter Yaa = tajweedV5Factory.getLetter(baseUrl+ "ى");
 		String OccuranceFormat = "%sS%03d_V%03d_W%03d_LO%03d";
 		int position = 0; //if starting with 1 change it to 0
 
@@ -168,14 +170,33 @@ public class SurahName {
 						PreviousLOI = LOI;
 					}
 					LI = tajweedV5Factory.getLetter(baseUrl+c[i]);
-					String LetterOccurrenceID = String.format(OccuranceFormat, baseUrl,Integer.parseInt(surahNo),Integer.parseInt(verseNo),wordNo + 1, i + 1 );
+					String LetterOccurrenceID = String.format(
+						OccuranceFormat,
+						baseUrl,
+						Integer.parseInt(surahNo), // surah
+						Integer.parseInt(verseNo), // verse
+						wordNo + 1, // word
+						i + 1 // LO
+					);
 					LOI = tajweedV5Factory.createLetterOccurrence(LetterOccurrenceID);
 					LOI.addInvolveLetter(LI);
 					LOI.addInvolveSurahNo(Integer.parseInt(surahNo));
 					//	LOI.addInvolveWordNo(Integer.parseInt(wordNo));
 					LOI.addInvolveWord((word));
 					//LOI.addHasPosition(position);
-					LOI.addHasLetterPosition(position);
+					int nextCharIdx = i + 1;
+					int nextTwoCharIdx = i + 2;
+					boolean haveSetPosition = false;
+					if (!(nextCharIdx >= c.length) && tajweedV5Factory.getHarakat(baseUrl + c[nextCharIdx]) != null) {
+						if (!(nextTwoCharIdx >= c.length) && tajweedV5Factory.getHarakat(baseUrl + c[nextTwoCharIdx]) != null) {
+							System.out.println("Found next two chars after " + c[i] + " to be harakats");
+							LOI.addHasLetterPosition(position + 2);
+							haveSetPosition = true;
+						}
+					}
+					if (!haveSetPosition) {
+						LOI.addHasLetterPosition(position);
+					}
 					LOI.addInvolveVerseNo(Integer.parseInt(verseNo));
 					if (PreviousLOI != null) {
 						PreviousLOI.addFollowedBy(LOI); 
@@ -193,11 +214,13 @@ public class SurahName {
 					int nextTwoCharIdx = i + 2;
 					if (!(nextCharIdx >= c.length)) {
 						if (c[i] == 'ً' ) {
-							if (c[nextCharIdx] == 'ا' ) {
+							if (c[nextCharIdx] == 'ا' || c[nextCharIdx] =='ى' ) {
 								i = i + 1;
-								System.out.println("Next character is alif");	
+								position++;
+								System.out.println("Next character is alif or yaah");	
 							} else if (c[nextCharIdx] == 'ۢ' && !(nextTwoCharIdx >= c.length) && c[nextTwoCharIdx] == 'ا') {
 								i = i + 2;
+								position++;
 								System.out.println("Skipping small meem and alif");
 							}
 						}
@@ -276,7 +299,7 @@ public class SurahName {
 		String[] rule13 = new String[]{"R013","IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 
 		//String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13};
-		String[][] rules  = {rule1, rule2, rule3};
+		String[][] rules  = {rule8};
 		return rules;
 	}
 
@@ -342,7 +365,7 @@ public class SurahName {
 
 	// No able to find way to use RO.gethasRuleType() to find the rule. So using object.toString as work around  
 	public static void insertdata(Integer SurahNo, Integer VerseNo, String RuleType, Integer LetterPosition) {
-		Pattern p = Pattern.compile("(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakinah)");
+		Pattern p = Pattern.compile("\\b(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakina)\\b");
 		Matcher m = p.matcher(RuleType);
 		String Rule = "";
 		if (m.find()) {
