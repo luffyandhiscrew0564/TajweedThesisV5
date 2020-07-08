@@ -42,14 +42,14 @@ public class SurahName {
 	private static OWLOntology ontology;
 	private static  V5TajweedFactory tajweedV5Factory;
 	private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
-	static Connection conn;
-	static Statement st;
+	//static Connection conn;
+	//static Statement st;
 	private static SWRLRuleEngine swrlRuleEngine;
 
 	public static void main(String[] args) 
 	{
 		try {
-			ConnectSQL.createConnection();
+			ConnectSQL.createConnectionwrite();
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -88,7 +88,7 @@ public class SurahName {
 		surahsToRead.add("3");
 		
 		List<String> versesToRead = new ArrayList();
-		versesToRead.add("10");
+		versesToRead.add("15");
 		//versesToRead.add("3");
 		List<String> versesToSkip = new ArrayList();
 		//versesToSkip.add("1");
@@ -103,19 +103,19 @@ public class SurahName {
 					String verse = line[2];
 					if (!surahsToRead.isEmpty()) {
 						if (!surahsToRead.contains(surahNo)) {
-							System.out.println("Skipping Surah " + surahNo);
+							//System.out.println("Skipping Surah " + surahNo);
 							continue;
 						}
 						if (!versesToRead.isEmpty()) {
 							if (!versesToRead.contains(verseNo)) {
-								System.out.println("Skipping Verse " + verseNo);
+							//	System.out.println("Skipping Verse " + verseNo);
 								continue;
 							}
 						}
 					}
 					if (!versesToSkip.isEmpty()) {
 						if(versesToSkip.contains(verseNo)) {
-							System.out.println("Skipping Verse " + verseNo);
+						//	System.out.println("Skipping Verse " + verseNo);
 							continue;
 						}
 					}
@@ -137,7 +137,7 @@ public class SurahName {
 					RunEngine(); 
 					System.out.println("Rules Inference Save for --- "+ ruleDefinition[1]);
 					saveont(surahNo,verseNo, ruleDefinition[0], ruleDefinition[1]);
-					WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
+					ConnectSQL.WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
 				}
 
 			}
@@ -299,7 +299,7 @@ public class SurahName {
 		String[] rule13 = new String[]{"R013","IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 
 		//String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13};
-		String[][] rules  = {rule8};
+		String[][] rules  = {rule13};
 		return rules;
 	}
 
@@ -320,77 +320,4 @@ public class SurahName {
 			e.printStackTrace();
 		}
 	}
-	public static void createConnection() throws SQLException, ClassNotFoundException
-	{
-
-		Class.forName("com.mysql.jdbc.Driver");
-		String  url = "jdbc:mysql://localhost:3306/fewsurahs?characterEncoding=utf8"; 
-		conn = DriverManager.getConnection(url,"root", ""); 
-		st = conn.createStatement(); 
-		System.out.println("connection created");
-	}
-
-	public static void WriteToDatabase(String surahNo, String verseNo,String ruleDefinition , String rule ) {
-		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
-		System.out.println("Reading file to Write to db");
-
-		try {
-			OWLOntology singleOntology = manager.loadOntologyFromOntologyDocument(file);
-			V5TajweedFactory tajweedFactory = new V5TajweedFactory(singleOntology);
-
-			System.out.println("File  found");
-			Collection ruleocc = tajweedFactory.getAllRuleOccurrenceInstances();
-			Iterator itr=ruleocc.iterator();
-
-			while ( itr.hasNext() ) {
-				RuleOccurrence ro = (RuleOccurrence) itr.next();
-
-				System.out.println(" Printing all the RO"+ ro.toString());
-				System.out.println("Instances of RO"+ ro.getOwlIndividual().toStringID());
-				Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
-				Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
-				Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
-				insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
-			}
-
-			System.out.println("file read");
-		}
-		catch (OWLOntologyCreationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-	}
-
-	// No able to find way to use RO.gethasRuleType() to find the rule. So using object.toString as work around  
-	public static void insertdata(Integer SurahNo, Integer VerseNo, String RuleType, Integer LetterPosition) {
-		Pattern p = Pattern.compile("\\b(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakina)\\b");
-		Matcher m = p.matcher(RuleType);
-		String Rule = "";
-		if (m.find()) {
-			Rule = m.group(1);
-		} else {
-			System.err.println("Rule not found in string! RuleType =  " + RuleType);
-			return;
-		}
-		String Statement = "INSERT INTO tajweedannotations (rule, indexstart, verse, chapter) " +
-				"VALUES ('" +
-				Rule + "'," +
-				LetterPosition + "," +
-				VerseNo + "," +
-				SurahNo + ")";
-		System.out.println("Will execute: " + Statement);
-		try {
-			System.out.println(st);
-			st.executeUpdate(Statement);
-		} catch (Exception e) { 
-			System.err.println("Got an exception! " + e); 
-			System.err.println(e.getMessage()); 
-			System.exit(0);
-		}
-
-	}
-
-
 }

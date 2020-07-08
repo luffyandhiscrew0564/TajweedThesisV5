@@ -19,20 +19,7 @@ public class ConnectSQL {
 
 	static Connection conn;
 	static Statement st;
-	public static void main(String[] args)  {
-
-		try {
-			createConnection();
-			readData();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public static void createConnection() throws SQLException, ClassNotFoundException
+/*	public static void createConnection() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		String  url = "jdbc:mysql://localhost:3306/Quran?characterEncoding=utf8"; 
@@ -40,17 +27,18 @@ public class ConnectSQL {
 		st = conn.createStatement(); 
 		System.out.println("connection created");
 	}
+*/	
 	public static void createConnectionwrite() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		String  url = "jdbc:mysql://localhost:3306/testing?characterEncoding=utf8"; 
+		String  url = "jdbc:mysql://localhost:3306/tajweedthesis?characterEncoding=utf8"; 
 		conn = DriverManager.getConnection(url,"root", ""); 
 		st = conn.createStatement(); 
 		System.out.println("connection created");
 	}
 	public static void insertdata(Integer SurahNo, Integer VerseNo, String RuleType, Integer LetterPosition)
 	{
-		Pattern p = Pattern.compile("(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakinah)");
+		Pattern p = Pattern.compile("\\b(Iqlab|Izhar|IdghaamWithoutGhunnah|IdghamWithGhunnah|Ikhfa|Qalqalah|IdghaamShafawi|IkhfaShafawi|IzharShafawi|Hamzatulwasal|MostCompleteGhunnah|Ghunnah|NoonSakinahAndTanween|MeemSakinah)\\b");
 		Matcher m = p.matcher(RuleType);
 		String Rule = "";
 		if (m.find()) {
@@ -75,7 +63,40 @@ public class ConnectSQL {
 			System.exit(0);
 		}
 	}
-	public static void readData() {
+	public static void WriteToDatabase(String surahNo, String verseNo,String ruleDefinition , String rule ) {
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		File file = new File("S"+surahNo + "_" +"V"+ verseNo + "_" +ruleDefinition+ "_"+ rule + ".owl");
+		System.out.println("Reading file to Write to db");
+
+		try {
+			OWLOntology singleOntology = manager.loadOntologyFromOntologyDocument(file);
+			V5TajweedFactory tajweedFactory = new V5TajweedFactory(singleOntology);
+
+			System.out.println("File  found");
+			Collection ruleocc = tajweedFactory.getAllRuleOccurrenceInstances();
+			Iterator itr=ruleocc.iterator();
+
+			while ( itr.hasNext() ) {
+				RuleOccurrence ro = (RuleOccurrence) itr.next();
+
+				System.out.println(" Printing all the RO"+ ro.toString());
+				System.out.println("Instances of RO"+ ro.getOwlIndividual().toStringID());
+				Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
+				Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
+				Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
+				ConnectSQL.insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
+			}
+
+			System.out.println("file read");
+		}
+		catch (OWLOntologyCreationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+	
+/*	public static void readData() {
 
 		String Statement = "SELECT * From quran_text WHERE sura = 1 AND aya = 2";
 		try {
@@ -98,5 +119,6 @@ public class ConnectSQL {
 		} 
 
 	}
+	*/
 }
 
