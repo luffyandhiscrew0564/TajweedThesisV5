@@ -225,8 +225,8 @@ Declaration(NamedIndividual(:ۢ))
 Declaration(NamedIndividual(:ۥ))
 Declaration(NamedIndividual(:ۦ))
 Declaration(NamedIndividual(:ۭ))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30>))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62>))
+Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa>))
+Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0>))
 Declaration(AnnotationProperty(term:created))
 Declaration(AnnotationProperty(term:creator))
 Declaration(AnnotationProperty(term:description))
@@ -424,8 +424,6 @@ ClassAssertion(:Rules :IdghaamWithoutGhunnah)
 
 ClassAssertion(:NoonSakinahAndTanween :IdghamWithGhunnah)
 ClassAssertion(:Rules :IdghamWithGhunnah)
-ObjectPropertyAssertion(:hasRuleOccurrence :IdghamWithGhunnah <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30>)
-ObjectPropertyAssertion(:hasRuleOccurrence :IdghamWithGhunnah <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62>)
 
 # Individual: :Ikhfa (:Ikhfa)
 
@@ -446,6 +444,8 @@ ClassAssertion(:Rules :IncompleteGhunnah)
 
 ClassAssertion(:NoonSakinahAndTanween :Iqlab)
 ClassAssertion(:Rules :Iqlab)
+ObjectPropertyAssertion(:hasRuleOccurrence :Iqlab <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa>)
+ObjectPropertyAssertion(:hasRuleOccurrence :Iqlab <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0>)
 
 # Individual: :Izhar (:Izhar)
 
@@ -799,6 +799,7 @@ DataPropertyAssertion(:involveWord :S003_V030_W009_LO006 "مُّحْضَرًا"^
 
 ClassAssertion(:LetterOccurrence :S003_V030_W009_LO008)
 ObjectPropertyAssertion(:followedBy :S003_V030_W009_LO008 :S003_V030_W009_LO010)
+ObjectPropertyAssertion(:followedBy :S003_V030_W009_LO008 :S003_V030_W010_LO001)
 ObjectPropertyAssertion(:involveHarakat :S003_V030_W009_LO008 :ً)
 ObjectPropertyAssertion(:involveLetter :S003_V030_W009_LO008 :ر)
 ObjectPropertyAssertion(:precededBy :S003_V030_W009_LO008 :S003_V030_W009_LO006)
@@ -1229,6 +1230,7 @@ DataPropertyAssertion(:involveWord :S003_V030_W019_LO003 "أَمَدًۢا"^^xsd
 
 ClassAssertion(:LetterOccurrence :S003_V030_W019_LO005)
 ObjectPropertyAssertion(:followedBy :S003_V030_W019_LO005 :S003_V030_W019_LO008)
+ObjectPropertyAssertion(:followedBy :S003_V030_W019_LO005 :S003_V030_W020_LO001)
 ObjectPropertyAssertion(:involveHarakat :S003_V030_W019_LO005 :ً)
 ObjectPropertyAssertion(:involveHarakat :S003_V030_W019_LO005 :ۢ)
 ObjectPropertyAssertion(:involveLetter :S003_V030_W019_LO005 :د)
@@ -1292,6 +1294,7 @@ DataPropertyAssertion(:involveWord :S003_V030_W020_LO005 "بَعِيدًا"^^xsd
 
 ClassAssertion(:LetterOccurrence :S003_V030_W020_LO006)
 ObjectPropertyAssertion(:followedBy :S003_V030_W020_LO006 :S003_V030_W020_LO008)
+ObjectPropertyAssertion(:followedBy :S003_V030_W020_LO006 :S003_V030_W021_LO001)
 ObjectPropertyAssertion(:involveHarakat :S003_V030_W020_LO006 :ً)
 ObjectPropertyAssertion(:involveLetter :S003_V030_W020_LO006 :د)
 ObjectPropertyAssertion(:precededBy :S003_V030_W020_LO006 :S003_V030_W020_LO005)
@@ -2048,25 +2051,25 @@ ClassAssertion(:Item :ۦ)
 ClassAssertion(Annotation(rdfs:comment "Low meem") :Harakat :ۭ)
 ClassAssertion(:Item :ۭ)
 
-# Individual: <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> (<http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30>)
+# Individual: <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> (<http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa>)
 
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> :IdghamWithGhunnah)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> :S003_V030_W008_LO005)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> "50"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> "3"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##b2a48e4d_4bb9_41ff_b039_30369f8aba30> "30"^^xsd:integer)
+ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa>)
+ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> :Iqlab)
+ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> :S003_V030_W025_LO006)
+DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> "199"^^xsd:integer)
+DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> "3"^^xsd:integer)
+DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##226ede8d_53b8_4ae0_b26b_ca77096a50aa> "30"^^xsd:integer)
 
-# Individual: <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> (<http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62>)
+# Individual: <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> (<http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0>)
 
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> :IdghamWithGhunnah)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> :S003_V030_W004_LO005)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> "24"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> "3"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##36cd2918_3a88_4bd2_97d1_9d43e0b29c62> "30"^^xsd:integer)
+ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0>)
+ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> :Iqlab)
+ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> :S003_V030_W019_LO005)
+DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> "136"^^xsd:integer)
+DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> "3"^^xsd:integer)
+DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##929683af_a2a3_4e66_bae4_ff7d729da6e0> "30"^^xsd:integer)
 
 
 DifferentIndividuals(:ء :ا :ب :ت :ث :ج :ح :خ :د :ذ :ر :ز :س :ش :ص :ض :ط :ظ :ع :غ :ف :ق :ك :ل :م :ن :ه :و :ي)
-DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment ""^^xsd:string) Annotation(rdfs:label "TanweenIdghamWithGhunnahRule"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) Variable(:p)) ClassAtom(:Letter Variable(:p)) ObjectPropertyAtom(:involveHarakat Variable(:LO) Variable(:T)) ClassAtom(:Tanween Variable(:T)) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IdghaamWithGhunnahLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :IdghamWithGhunnah) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P))))
+DLSafeRule(Annotation(swrl2:isRuleEnabled "true"^^xsd:boolean) Annotation(rdfs:comment ""^^xsd:string) Annotation(rdfs:label "TanweenIqlabRule"^^xsd:string) Body(ClassAtom(:LetterOccurrence Variable(:LO)) ObjectPropertyAtom(:involveLetter Variable(:LO) Variable(:p)) ClassAtom(:Letter Variable(:p)) ObjectPropertyAtom(:involveHarakat Variable(:LO) Variable(:T)) ClassAtom(:Tanween Variable(:T)) ObjectPropertyAtom(:followedBy Variable(:LO) Variable(:LOF)) ClassAtom(:LetterOccurrence Variable(:LOF)) ObjectPropertyAtom(:involveLetter Variable(:LOF) Variable(:L)) ClassAtom(:IqlabLetter Variable(:L)) DataPropertyAtom(:involveSurahNo Variable(:LO) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:LO) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:LO) Variable(:P)) BuiltInAtom(<http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#makeOWLThing> Variable(:R) Variable(:LO) Variable(:LOF)))Head(ClassAtom(:RuleOccurrence Variable(:R)) ObjectPropertyAtom(:occurAt Variable(:R) Variable(:LO)) ObjectPropertyAtom(:hasRuleType Variable(:R) :Iqlab) DataPropertyAtom(:involveSurahNo Variable(:R) Variable(:S)) DataPropertyAtom(:involveVerseNo Variable(:R) Variable(:V)) DataPropertyAtom(:hasLetterPosition Variable(:R) Variable(:P))))
 )

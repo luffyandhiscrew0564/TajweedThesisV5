@@ -185,6 +185,7 @@ Declaration(NamedIndividual(:ط))
 Declaration(NamedIndividual(:ظ))
 Declaration(NamedIndividual(:ع))
 Declaration(NamedIndividual(:غ))
+Declaration(NamedIndividual(:ـ))
 Declaration(NamedIndividual(:ف))
 Declaration(NamedIndividual(:ق))
 Declaration(NamedIndividual(:ك))
@@ -1807,6 +1808,11 @@ ClassAssertion(:Item :غ)
 ClassAssertion(:IzharLetter :غ)
 ClassAssertion(:IzharShafawiLetter :غ)
 ClassAssertion(Annotation(rdfs:label "غ"@ar) :Letter :غ)
+
+# Individual: :ـ (:ـ)
+
+ClassAssertion(:Harakat :ـ)
+ClassAssertion(:Item :ـ)
 
 # Individual: :ف (:ف)
 

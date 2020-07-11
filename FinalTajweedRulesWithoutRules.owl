@@ -941,6 +941,14 @@
     
 
 
+    <!-- http://www.tajweedontology.org/ontologies/rules#ـ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ـ">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Harakat"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.tajweedontology.org/ontologies/rules#ف -->
 
     <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ف">
