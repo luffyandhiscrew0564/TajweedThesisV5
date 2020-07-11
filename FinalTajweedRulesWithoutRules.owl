@@ -582,9 +582,25 @@
     
 
 
+    <!-- http://www.tajweedontology.org/ontologies/rules#ؤ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ؤ">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Letter"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.tajweedontology.org/ontologies/rules#إ -->
 
     <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#إ">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Letter"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ئ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ئ">
         <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Letter"/>
     </owl:NamedIndividual>
     
@@ -1209,6 +1225,14 @@
     
 
 
+    <!-- http://www.tajweedontology.org/ontologies/rules#ٔ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ٔ">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Harakat"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.tajweedontology.org/ontologies/rules#ٰ -->
 
     <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ٰ">
@@ -1234,6 +1258,64 @@
         <owl:annotatedTarget rdf:resource="http://www.tajweedontology.org/ontologies/rules#Letter"/>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hamzatulwasal</rdfs:comment>
     </owl:Axiom>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ٶ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ٶ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ٷ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ٷ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ٸ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ٸ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ۂ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ۂ">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Letter"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ۇ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ۇ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ۈ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ۈ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ے -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ے"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#ۓ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#ۓ"/>
+    
+
+
+    <!-- http://www.tajweedontology.org/ontologies/rules#۟ -->
+
+    <owl:NamedIndividual rdf:about="http://www.tajweedontology.org/ontologies/rules#۟">
+        <rdf:type rdf:resource="http://www.tajweedontology.org/ontologies/rules#Harakat"/>
+    </owl:NamedIndividual>
     
 
 

@@ -88,7 +88,7 @@ public class SurahName {
 		surahsToRead.add("3");
 		
 		List<String> versesToRead = new ArrayList();
-		versesToRead.add("14");
+		versesToRead.add("30");
 		//versesToRead.add("3");
 		List<String> versesToSkip = new ArrayList();
 		//versesToSkip.add("1");
@@ -186,26 +186,28 @@ public class SurahName {
 					//	LOI.addInvolveWordNo(Integer.parseInt(wordNo));
 					LOI.addInvolveWord((word));
 					//LOI.addHasPosition(position);
-/*					int nextCharIdx = i + 1;
+					int nextCharIdx = i + 1;
 					int nextTwoCharIdx = i + 2;
 					boolean haveSetPosition = false;
 					if (!(nextCharIdx >= c.length) && tajweedV5Factory.getHarakat(baseUrl + c[nextCharIdx]) != null) {
 						if (!(nextTwoCharIdx >= c.length) && tajweedV5Factory.getHarakat(baseUrl + c[nextTwoCharIdx]) != null) {
 							System.out.println("Found next two chars after " + c[i] + " to be harakats");
-							LOI.addHasLetterPosition(position + 2);
+							//position = position + 3;
+							LOI.addHasLetterPosition(position);
 							haveSetPosition = true;
 						}
 					}
 					if (!haveSetPosition) {
 						LOI.addHasLetterPosition(position);
-					}*/
-					LOI.addHasLetterPosition(position);
+					}
+					//LOI.addHasLetterPosition(position);
 					LOI.addInvolveVerseNo(Integer.parseInt(verseNo));
 					if (PreviousLOI != null) {
 						PreviousLOI.addFollowedBy(LOI); 
 						LOI.addPrecededBy(PreviousLOI);
 					}
-
+					position++;
+					continue;
 				} else if(tajweedV5Factory.getHarakat(baseUrl+c[i])!=null) {
 					Harakat HI = tajweedV5Factory.getHarakat(baseUrl+c[i]);
 					LOI.addInvolveHarakat(HI);
@@ -217,12 +219,12 @@ public class SurahName {
 						if (c[i] == 'ً' ) {
 							if (c[nextCharIdx] == 'ا' || c[nextCharIdx] =='ى' ) {
 								i = i + 1;
-								position++;
-								System.out.println("Next character is alif or yaah");	
+								//position--;
+								System.out.println("Next character is " + c[nextCharIdx] + ", skipping");
 							} else if (c[nextCharIdx] == 'ۢ' && !(nextTwoCharIdx >= c.length) && c[nextTwoCharIdx] == 'ا') {
 								i = i + 2;
-								position++;
-								System.out.println("Skipping small meem and alif");
+								//position++; position++;
+								System.out.println("Skipping small meem and alif - " + c[nextCharIdx] + " - " + c[nextTwoCharIdx]);
 							}
 						}
 
@@ -278,7 +280,7 @@ public class SurahName {
 	}
 	
 	public static void wordExceptions() {
-		String[] exceptions = {"ٱلدُّنْيَا","صِنْوَانٌ" , "قِنْوَانٌ" };
+		String[] exceptions = {"ٱلدُّنْيَا","صِنْوَانٌ" , "قِنْوَانٌ" , "بُنْيَٰنَهُۥ" };
 		Collection<? extends LetterOccurrence> letterOccurrences = tajweedV5Factory.getAllLetterOccurrenceInstances(); //Its an Array taking all the LO made from parsestr() getting LO from the ontology
 		Collection<? extends RuleOccurrence> ruleOccurrences = tajweedV5Factory.getAllRuleOccurrenceInstances();
 		for (LetterOccurrence LO : letterOccurrences) {
@@ -316,12 +318,12 @@ public class SurahName {
 		String[] rule8 = new String[]{"R008","IdghamWithGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghamWithGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule9 = new String[]{"R009","IdghamwithoutGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithoutGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, IdghaamWithoutGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule10 = new String[]{"R010","MostCompleteGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ّ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, MostCompleteGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
-		String[] rule11 = new String[]{"R011","MostCompleteGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ّ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, MostCompleteGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
+		String[] rule11 = new String[]{"R011","MostCompleteGhunnah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ن) ^ involveHarakat(?LO, ّ) ^followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IdghaamWithGhunnahLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, MostCompleteGhunnah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule12 = new String[]{"R012","Qalqalah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?L) ^ QalqalahLetter(?L) ^ involveHarakat(?LO, ْ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Qalqalah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule13 = new String[]{"R013","IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 
 		//String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13};
-		String[][] rules  = {rule8};
+		String[][] rules  = {rule5};
 		return rules;
 	}
 
