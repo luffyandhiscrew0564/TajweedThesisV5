@@ -9,11 +9,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.protege.owl.codegeneration.WrappedIndividual;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+
+import V5TajweedFactoryOnto.LetterOccurrence;
 import V5TajweedFactoryOnto.RuleOccurrence;
+import V5TajweedFactoryOnto.Tanween;
 import V5TajweedFactoryOnto.V5TajweedFactory;
 public class ConnectSQL {
 
@@ -84,6 +89,30 @@ public class ConnectSQL {
 				Integer letterPosition = ro.getHasLetterPosition().iterator().next();	
 				Integer surahNo1 = ro.getInvolveSurahNo().iterator().next();
 				Integer verseNo1 = ro.getInvolveVerseNo().iterator().next();
+				
+				Collection<? extends WrappedIndividual> occurAts = ro.getOccurAt();
+				for (WrappedIndividual OA : occurAts) {
+					LetterOccurrence occurAt = tajweedFactory.as(OA, LetterOccurrence.class);
+					Collection<? extends WrappedIndividual> harakats = occurAt.getInvolveHarakat();
+					boolean hasTanween = false;
+					for (WrappedIndividual harakat : harakats) {
+						if (tajweedFactory.canAs(harakat, Tanween.class)) {
+							hasTanween = true;
+							break;
+						}
+					}
+					if (hasTanween) {
+						Collection<? extends Integer> harakatPositions = occurAt.getHasHaraktPosition();
+						Integer harakatPosition = 0;
+						for (Integer pos : harakatPositions) {
+							if (pos > harakatPosition) {
+								harakatPosition = pos;
+							}
+						}
+						letterPosition = harakatPosition;
+					}
+				}
+				
 				ConnectSQL.insertdata(surahNo1, verseNo1, ro.toString(), letterPosition);
 			}
 
