@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -16,6 +17,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import V5TajweedFactoryOnto.Harakat;
+import V5TajweedFactoryOnto.Letter;
 import V5TajweedFactoryOnto.LetterOccurrence;
 import V5TajweedFactoryOnto.RuleOccurrence;
 import V5TajweedFactoryOnto.Tanween;
@@ -24,7 +27,10 @@ public class ConnectSQL {
 
 	static Connection conn;
 	static Statement st;
-/*	public static void createConnection() throws SQLException, ClassNotFoundException
+	private static String baseUrl= "http://www.tajweedontology.org/ontologies/rules#";
+	
+
+	/*	public static void createConnection() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		String  url = "jdbc:mysql://localhost:3306/Quran?characterEncoding=utf8"; 
@@ -36,7 +42,7 @@ public class ConnectSQL {
 	public static void createConnectionwrite() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		String  url = "jdbc:mysql://localhost:3306/tajweedthesis?characterEncoding=utf8"; 
+		String  url = "jdbc:mysql://localhost:3306/testing?characterEncoding=utf8"; 
 		conn = DriverManager.getConnection(url,"root", ""); 
 		st = conn.createStatement(); 
 		System.out.println("connection created");
@@ -80,6 +86,8 @@ public class ConnectSQL {
 			System.out.println("File  found");
 			Collection ruleocc = tajweedFactory.getAllRuleOccurrenceInstances();
 			Iterator itr=ruleocc.iterator();
+			Letter BigMeem = tajweedFactory.getLetter(baseUrl+ "م");
+			Harakat Shaad = tajweedFactory.getHarakat(baseUrl+'ّ');
 
 			while ( itr.hasNext() ) {
 				RuleOccurrence ro = (RuleOccurrence) itr.next();
@@ -94,6 +102,7 @@ public class ConnectSQL {
 				for (WrappedIndividual OA : occurAts) {
 					LetterOccurrence occurAt = tajweedFactory.as(OA, LetterOccurrence.class);
 					Collection<? extends WrappedIndividual> harakats = occurAt.getInvolveHarakat();
+					Collection<? extends WrappedIndividual> letters = occurAt.getInvolveLetter();
 					boolean hasTanween = false;
 					for (WrappedIndividual harakat : harakats) {
 						if (tajweedFactory.canAs(harakat, Tanween.class)) {
@@ -110,6 +119,16 @@ public class ConnectSQL {
 							}
 						}
 						letterPosition = harakatPosition;
+					}
+					if (letters.contains(BigMeem) && harakats.contains(Shaad)) {
+						Collection<? extends Integer> harakatPositions = occurAt.getHasHaraktPosition();
+						Integer harakatPosition = 0;
+						for (Integer pos : harakatPositions) {
+							if (pos > harakatPosition) {
+								harakatPosition = pos;
+							}
+						}
+						letterPosition = harakatPosition - 1;
 					}
 				}
 				

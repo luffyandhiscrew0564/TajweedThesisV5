@@ -85,20 +85,27 @@ public class SurahName {
 		String[][] ruleList = allRules();
 
 		List<String> surahsToRead = new ArrayList();
-		surahsToRead.add("3");
+		surahsToRead.add("2");
+		//surahsToRead.add("74");
+		//surahsToRead.add("73");
+		//surahsToRead.add("72");
+		//surahsToRead.add("71");
+		//surahsToRead.add("70");
 
 		List<String> versesToRead = new ArrayList();
-		versesToRead.add("196");
 		
-		  versesToRead.add("195"); versesToRead.add("194"); versesToRead.add("190");
-		  versesToRead.add("182"); versesToRead.add("181"); versesToRead.add("120");
-		  versesToRead.add("37"); versesToRead.add("30"); versesToRead.add("27");
-		  versesToRead.add("20"); versesToRead.add("19"); versesToRead.add("15");
-		  versesToRead.add("14"); versesToRead.add("12"); versesToRead.add("11");
-		  versesToRead.add("9"); versesToRead.add("8"); versesToRead.add("7");
+		 // versesToRead.add("2");
+			/*
+			 * versesToRead.add("195"); versesToRead.add("194"); versesToRead.add("190");
+			 * versesToRead.add("182"); versesToRead.add("181"); versesToRead.add("120");
+			 * versesToRead.add("37"); versesToRead.add("30"); versesToRead.add("27");
+			 * versesToRead.add("20"); versesToRead.add("19"); versesToRead.add("15");
+			 * versesToRead.add("14"); versesToRead.add("12"); versesToRead.add("11");
+			 * versesToRead.add("9"); versesToRead.add("8"); versesToRead.add("7");
+			 */
 		 
 		List<String> versesToSkip = new ArrayList();
-		//versesToSkip.add("1");
+		versesToSkip.add("282");
 		//versesToSkip.add("3");
 
 		try {
@@ -141,9 +148,9 @@ public class SurahName {
 					ParseStr(surahNo, verseNo, words) ;
 					AdjustHarakats();
 					System.out.println("Running Engine is running for --- "+ ruleDefinition[1]);
-					RunEngine(); 
+					//RunEngine(); 
 					System.out.println("Rules Inference Save for --- "+ ruleDefinition[1]);
-					wordExceptions();
+					//wordExceptions();
 					saveont(surahNo,verseNo, ruleDefinition[0], ruleDefinition[1]);
 					ConnectSQL.WriteToDatabase(surahNo, verseNo, ruleDefinition[0], ruleDefinition[1]);
 				}
@@ -170,16 +177,7 @@ public class SurahName {
 			String word = words[wordNo];
 			char c [] = word.toCharArray();
 			for (int i = 0; i < c.length; i++) {
-				/*
-				 * if (c[i] == 'ـ') { System.out.println("Empty char -- skipping"); continue;
-				 * 
-				 * 
-				 * }
-				 */
-
 				System.out.println("Character = " + c[i]);
-
-
 				if (tajweedV5Factory.getLetter(baseUrl + c[i]) != null) {
 					// was there a previous letter? store it in PreviousLOI
 					if (LOI != null) { 
@@ -275,7 +273,7 @@ public class SurahName {
 						LetterOccurrence FB = tajweedV5Factory.as(FO, LetterOccurrence.class);
 						Collection<? extends WrappedIndividual> letters = FB.getInvolveLetter();
 						if (letters.contains(Alif) || letters.contains(Ya)) {
-							if (FB.getFollowedBy().iterator().next() != null) {
+							if (FB.getFollowedBy().iterator().hasNext()) {
 								LO.addFollowedBy(FB.getFollowedBy().iterator().next());
 							}
 						} 
@@ -286,12 +284,12 @@ public class SurahName {
 	}
 
 	public static void wordExceptions() {
-		String[] exceptions = {"ٱلدُّنْيَآ","صِنْوَانٌ" , "قِنْوَانٌ" , "بُنْيَٰنَهُۥ" };
+		String[] exceptions = {"ٱلدُّنْيَآ","صِنْوَا", "صِنْوَا", "قِنْوَانٌ" , "بُنْيَٰنَهُۥ" , "ٱلدُّنْيَا" , "بُنْيَٰنٌ", "بُنْيَٰنَهُم" };
 		Collection<? extends LetterOccurrence> letterOccurrences = tajweedV5Factory.getAllLetterOccurrenceInstances(); //Its an Array taking all the LO made from parsestr() getting LO from the ontology
 		Collection<? extends RuleOccurrence> ruleOccurrences = tajweedV5Factory.getAllRuleOccurrenceInstances();
 		for (LetterOccurrence LO : letterOccurrences) {
 			Collection involvedWord = LO.getInvolveWord();
-			if (involvedWord.contains(exceptions[0] )||involvedWord.contains(exceptions[1])||involvedWord.contains(exceptions[2])) {
+			if (involvedWord.contains(exceptions[0] )||involvedWord.contains(exceptions[1])||involvedWord.contains(exceptions[2]) ||involvedWord.contains(exceptions[3]) ||involvedWord.contains(exceptions[4]) ||involvedWord.contains(exceptions[5]) ||involvedWord.contains(exceptions[6]) ||involvedWord.contains(exceptions[7])) {
 				for (RuleOccurrence RO : ruleOccurrences) {
 					Collection occurAt = RO.getOccurAt();
 					if (occurAt.contains(LO)) {
@@ -331,8 +329,9 @@ public class SurahName {
 		String[] rule12 = new String[]{"R012","Qalqalah", "LetterOccurrence(?LO) ^ involveLetter(?LO, ?L) ^ QalqalahLetter(?L) ^ involveHarakat(?LO, ْ) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasRuleType(?R, Qalqalah) ^ hasLetterPosition(?R, ?P) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 		String[] rule13 = new String[]{"R013","IkhfaShafawiRule", "LetterOccurrence(?LO) ^ involveLetter(?LO, م) ^ involveHarakat(?LO, ْ) ^ followedBy(?LO, ?LOF) ^ LetterOccurrence(?LOF) ^ involveLetter(?LOF, ?L) ^ IkhfaShafawiLetter(?L) ^ involveSurahNo(?LO, ?S) ^ involveVerseNo(?LO, ?V) ^ hasLetterPosition(?LO, ?P) ^ swrlx:makeOWLThing(?R, ?LO, ?LOF) -> RuleOccurrence(?R) ^ occurAt(?R, ?LO) ^ hasLetterPosition(?R, ?P) ^ hasRuleType(?R, IkhfaShafawi) ^ involveSurahNo(?R, ?S) ^ involveVerseNo(?R, ?V)"};
 
-		//String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13};
-		String[][] rules  = {rule12};
+		String[][] rules  = {rule1, rule2, rule3, rule4, rule5, rule6, rule7a, rule7b, rule7c, rule8, rule9, rule10, rule11, rule12, rule13};
+		//String[][] rules  = {rule5, rule6, rule7a, rule7b, rule7c, rule8, rule9, rule10, rule11, rule12, rule13};
+		//String[][] rules  = {rule10};
 		return rules;
 	}
 

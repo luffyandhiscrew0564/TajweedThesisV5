@@ -135,6 +135,7 @@ Declaration(NamedIndividual(:S002_V170_W017_LO001))
 Declaration(NamedIndividual(:S002_V170_W017_LO003))
 Declaration(NamedIndividual(:S002_V170_W017_LO004))
 Declaration(NamedIndividual(:S002_V170_W017_LO006))
+Declaration(NamedIndividual(:S002_V170_W017_LO008))
 Declaration(NamedIndividual(:S002_V170_W017_LO010))
 Declaration(NamedIndividual(:S002_V170_W017_LO012))
 Declaration(NamedIndividual(:S002_V170_W018_LO001))
@@ -147,6 +148,7 @@ Declaration(NamedIndividual(:S002_V170_W019_LO009))
 Declaration(NamedIndividual(:S002_V170_W019_LO010))
 Declaration(NamedIndividual(:S002_V170_W020_LO001))
 Declaration(NamedIndividual(:S002_V170_W020_LO003))
+Declaration(NamedIndividual(:S002_V170_W020_LO008))
 Declaration(NamedIndividual(:S002_V170_W021_LO001))
 Declaration(NamedIndividual(:S002_V170_W021_LO003))
 Declaration(NamedIndividual(:S002_V170_W021_LO005))
@@ -159,7 +161,9 @@ Declaration(NamedIndividual(:S002_V170_W022_LO010))
 Declaration(NamedIndividual(:ء))
 Declaration(NamedIndividual(:آ))
 Declaration(NamedIndividual(:أ))
+Declaration(NamedIndividual(:ؤ))
 Declaration(NamedIndividual(:إ))
+Declaration(NamedIndividual(:ئ))
 Declaration(NamedIndividual(:ا))
 Declaration(NamedIndividual(:ب))
 Declaration(NamedIndividual(:ة))
@@ -180,6 +184,7 @@ Declaration(NamedIndividual(:ط))
 Declaration(NamedIndividual(:ظ))
 Declaration(NamedIndividual(:ع))
 Declaration(NamedIndividual(:غ))
+Declaration(NamedIndividual(:ـ))
 Declaration(NamedIndividual(:ف))
 Declaration(NamedIndividual(:ق))
 Declaration(NamedIndividual(:ك))
@@ -199,13 +204,22 @@ Declaration(NamedIndividual(:ِ))
 Declaration(NamedIndividual(:ّ))
 Declaration(NamedIndividual(:ْ))
 Declaration(NamedIndividual(:ٓ))
+Declaration(NamedIndividual(:ٔ))
 Declaration(NamedIndividual(:ٰ))
 Declaration(NamedIndividual(:ٱ))
+Declaration(NamedIndividual(:ٶ))
+Declaration(NamedIndividual(:ٷ))
+Declaration(NamedIndividual(:ٸ))
+Declaration(NamedIndividual(:ۂ))
+Declaration(NamedIndividual(:ۇ))
+Declaration(NamedIndividual(:ۈ))
+Declaration(NamedIndividual(:ے))
+Declaration(NamedIndividual(:ۓ))
+Declaration(NamedIndividual(:۟))
 Declaration(NamedIndividual(:ۢ))
 Declaration(NamedIndividual(:ۥ))
 Declaration(NamedIndividual(:ۦ))
 Declaration(NamedIndividual(:ۭ))
-Declaration(NamedIndividual(<http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c>))
 Declaration(AnnotationProperty(term:created))
 Declaration(AnnotationProperty(term:creator))
 Declaration(AnnotationProperty(term:description))
@@ -293,32 +307,26 @@ SubClassOf(:Harakat :Item)
 
 # Class: :IdghaamShafawiLetter (:IdghaamShafawiLetter)
 
-SubClassOf(:IdghaamShafawiLetter :Item)
 SubClassOf(:IdghaamShafawiLetter :Letter)
 
 # Class: :IdghaamWithGhunnahLetter (:IdghaamWithGhunnahLetter)
 
-SubClassOf(:IdghaamWithGhunnahLetter :Item)
 SubClassOf(:IdghaamWithGhunnahLetter :Letter)
 
 # Class: :IdghaamWithoutGhunnahLetter (:IdghaamWithoutGhunnahLetter)
 
-SubClassOf(:IdghaamWithoutGhunnahLetter :Item)
 SubClassOf(:IdghaamWithoutGhunnahLetter :Letter)
 
 # Class: :IkhfaLetter (:IkhfaLetter)
 
-SubClassOf(:IkhfaLetter :Item)
 SubClassOf(:IkhfaLetter :Letter)
 
 # Class: :IkhfaShafawiLetter (:IkhfaShafawiLetter)
 
-SubClassOf(:IkhfaShafawiLetter :Item)
 SubClassOf(:IkhfaShafawiLetter :Letter)
 
 # Class: :IqlabLetter (:IqlabLetter)
 
-SubClassOf(:IqlabLetter :Item)
 SubClassOf(:IqlabLetter :Letter)
 
 # Class: :Item (:Item)
@@ -328,12 +336,10 @@ AnnotationAssertion(rdfs:comment :Item "This class is the collection of letters,
 
 # Class: :IzharLetter (:IzharLetter)
 
-SubClassOf(:IzharLetter :Item)
 SubClassOf(:IzharLetter :Letter)
 
 # Class: :IzharShafawiLetter (:IzharShafawiLetter)
 
-SubClassOf(:IzharShafawiLetter :Item)
 SubClassOf(:IzharShafawiLetter :Letter)
 
 # Class: :Letter (الحروف)
@@ -365,13 +371,11 @@ SubClassOf(:Qalqalah :Rules)
 
 # Class: :QalqalahLetter (:QalqalahLetter)
 
-SubClassOf(:QalqalahLetter :Item)
 SubClassOf(:QalqalahLetter :Letter)
 
 # Class: :Tanween (:Tanween)
 
 SubClassOf(:Tanween :Harakat)
-SubClassOf(:Tanween :Item)
 
 # Class: :Word (:Word)
 
@@ -387,63 +391,50 @@ SubClassOf(:Word ObjectSomeValuesFrom(:containLetter :MaadLetter))
 # Individual: :Hamzatulwasal (:Hamzatulwasal)
 
 ClassAssertion(:Hamzatulwasal :Hamzatulwasal)
-ClassAssertion(:Rules :Hamzatulwasal)
 
 # Individual: :IdghaamShafawi (:IdghaamShafawi)
 
 ClassAssertion(:MeemSakinah :IdghaamShafawi)
-ClassAssertion(:Rules :IdghaamShafawi)
 
 # Individual: :IdghaamWithoutGhunnah (:IdghaamWithoutGhunnah)
 
 ClassAssertion(:NoonSakinahAndTanween :IdghaamWithoutGhunnah)
-ClassAssertion(:Rules :IdghaamWithoutGhunnah)
 
 # Individual: :IdghamWithGhunnah (:IdghamWithGhunnah)
 
 ClassAssertion(:NoonSakinahAndTanween :IdghamWithGhunnah)
-ClassAssertion(:Rules :IdghamWithGhunnah)
 
 # Individual: :Ikhfa (:Ikhfa)
 
 ClassAssertion(:NoonSakinahAndTanween :Ikhfa)
-ClassAssertion(:Rules :Ikhfa)
-ObjectPropertyAssertion(:hasRuleOccurrence :Ikhfa <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c>)
 
 # Individual: :IkhfaShafawi (:IkhfaShafawi)
 
 ClassAssertion(:MeemSakinah :IkhfaShafawi)
-ClassAssertion(:Rules :IkhfaShafawi)
 
 # Individual: :IncompleteGhunnah (:IncompleteGhunnah)
 
 ClassAssertion(:Ghunnah :IncompleteGhunnah)
-ClassAssertion(:Rules :IncompleteGhunnah)
 
 # Individual: :Iqlab (:Iqlab)
 
 ClassAssertion(:NoonSakinahAndTanween :Iqlab)
-ClassAssertion(:Rules :Iqlab)
 
 # Individual: :Izhar (:Izhar)
 
 ClassAssertion(:NoonSakinahAndTanween :Izhar)
-ClassAssertion(:Rules :Izhar)
 
 # Individual: :IzharShafawi (:IzharShafawi)
 
 ClassAssertion(:MeemSakinah :IzharShafawi)
-ClassAssertion(:Rules :IzharShafawi)
 
 # Individual: :MostCompleteGhunnah (:MostCompleteGhunnah)
 
 ClassAssertion(:Ghunnah :MostCompleteGhunnah)
-ClassAssertion(:Rules :MostCompleteGhunnah)
 
 # Individual: :Qalqalah (:Qalqalah)
 
 ClassAssertion(:Qalqalah :Qalqalah)
-ClassAssertion(:Rules :Qalqalah)
 
 # Individual: :S002_V170_W001_LO001 (:S002_V170_W001_LO001)
 
@@ -637,8 +628,10 @@ DataPropertyAssertion(:involveWord :S002_V170_W004_LO009 "ٱتَّبِعُوا۟
 
 ClassAssertion(:LetterOccurrence :S002_V170_W004_LO010)
 ObjectPropertyAssertion(:followedBy :S002_V170_W004_LO010 :S002_V170_W005_LO001)
+ObjectPropertyAssertion(:involveHarakat :S002_V170_W004_LO010 :۟)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W004_LO010 :ا)
 ObjectPropertyAssertion(:precededBy :S002_V170_W004_LO010 :S002_V170_W004_LO009)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W004_LO010 "31"^^xsd:integer)
 DataPropertyAssertion(:hasLetterPosition :S002_V170_W004_LO010 "30"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W004_LO010 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W004_LO010 "170"^^xsd:integer)
@@ -823,8 +816,10 @@ DataPropertyAssertion(:involveWord :S002_V170_W008_LO006 "قَالُوا۟"^^xsd
 
 ClassAssertion(:LetterOccurrence :S002_V170_W008_LO007)
 ObjectPropertyAssertion(:followedBy :S002_V170_W008_LO007 :S002_V170_W009_LO001)
+ObjectPropertyAssertion(:involveHarakat :S002_V170_W008_LO007 :۟)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W008_LO007 :ا)
 ObjectPropertyAssertion(:precededBy :S002_V170_W008_LO007 :S002_V170_W008_LO006)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W008_LO007 "61"^^xsd:integer)
 DataPropertyAssertion(:hasLetterPosition :S002_V170_W008_LO007 "60"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W008_LO007 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W008_LO007 "170"^^xsd:integer)
@@ -1282,17 +1277,28 @@ DataPropertyAssertion(:involveWord :S002_V170_W017_LO004 "ءَابَآؤُهُ
 # Individual: :S002_V170_W017_LO006 (:S002_V170_W017_LO006)
 
 ClassAssertion(:LetterOccurrence :S002_V170_W017_LO006)
-ObjectPropertyAssertion(:followedBy :S002_V170_W017_LO006 :S002_V170_W017_LO010)
-ObjectPropertyAssertion(:involveHarakat :S002_V170_W017_LO006 :ُ)
+ObjectPropertyAssertion(:followedBy :S002_V170_W017_LO006 :S002_V170_W017_LO008)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W017_LO006 :ٓ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W017_LO006 :ا)
 ObjectPropertyAssertion(:precededBy :S002_V170_W017_LO006 :S002_V170_W017_LO004)
 DataPropertyAssertion(:hasHaraktPosition :S002_V170_W017_LO006 "139"^^xsd:integer)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W017_LO006 "141"^^xsd:integer)
 DataPropertyAssertion(:hasLetterPosition :S002_V170_W017_LO006 "138"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W017_LO006 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W017_LO006 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W017_LO006 "ءَابَآؤُهُمْ"^^xsd:string)
+
+# Individual: :S002_V170_W017_LO008 (:S002_V170_W017_LO008)
+
+ClassAssertion(:LetterOccurrence :S002_V170_W017_LO008)
+ObjectPropertyAssertion(:followedBy :S002_V170_W017_LO008 :S002_V170_W017_LO010)
+ObjectPropertyAssertion(:involveHarakat :S002_V170_W017_LO008 :ُ)
+ObjectPropertyAssertion(:involveLetter :S002_V170_W017_LO008 :ؤ)
+ObjectPropertyAssertion(:precededBy :S002_V170_W017_LO008 :S002_V170_W017_LO006)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W017_LO008 "141"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W017_LO008 "140"^^xsd:integer)
+DataPropertyAssertion(:involveSurahNo :S002_V170_W017_LO008 "2"^^xsd:integer)
+DataPropertyAssertion(:involveVerseNo :S002_V170_W017_LO008 "170"^^xsd:integer)
+DataPropertyAssertion(:involveWord :S002_V170_W017_LO008 "ءَابَآؤُهُمْ"^^xsd:string)
 
 # Individual: :S002_V170_W017_LO010 (:S002_V170_W017_LO010)
 
@@ -1300,7 +1306,7 @@ ClassAssertion(:LetterOccurrence :S002_V170_W017_LO010)
 ObjectPropertyAssertion(:followedBy :S002_V170_W017_LO010 :S002_V170_W017_LO012)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W017_LO010 :ُ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W017_LO010 :ه)
-ObjectPropertyAssertion(:precededBy :S002_V170_W017_LO010 :S002_V170_W017_LO006)
+ObjectPropertyAssertion(:precededBy :S002_V170_W017_LO010 :S002_V170_W017_LO008)
 DataPropertyAssertion(:hasHaraktPosition :S002_V170_W017_LO010 "143"^^xsd:integer)
 DataPropertyAssertion(:hasLetterPosition :S002_V170_W017_LO010 "142"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W017_LO010 "2"^^xsd:integer)
@@ -1436,17 +1442,33 @@ DataPropertyAssertion(:involveWord :S002_V170_W020_LO001 "شَيْـًٔا"^^xsd
 # Individual: :S002_V170_W020_LO003 (:S002_V170_W020_LO003)
 
 ClassAssertion(:LetterOccurrence :S002_V170_W020_LO003)
+ObjectPropertyAssertion(:followedBy :S002_V170_W020_LO003 :S002_V170_W020_LO008)
 ObjectPropertyAssertion(:followedBy :S002_V170_W020_LO003 :S002_V170_W021_LO001)
+ObjectPropertyAssertion(:involveHarakat :S002_V170_W020_LO003 :ـ)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W020_LO003 :ً)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W020_LO003 :ْ)
+ObjectPropertyAssertion(:involveHarakat :S002_V170_W020_LO003 :ٔ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W020_LO003 :ي)
 ObjectPropertyAssertion(:precededBy :S002_V170_W020_LO003 :S002_V170_W020_LO001)
 DataPropertyAssertion(:hasHaraktPosition :S002_V170_W020_LO003 "166"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W020_LO003 "167"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W020_LO003 "168"^^xsd:integer)
 DataPropertyAssertion(:hasHaraktPosition :S002_V170_W020_LO003 "169"^^xsd:integer)
 DataPropertyAssertion(:hasLetterPosition :S002_V170_W020_LO003 "165"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W020_LO003 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W020_LO003 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W020_LO003 "شَيْـًٔا"^^xsd:string)
+
+# Individual: :S002_V170_W020_LO008 (:S002_V170_W020_LO008)
+
+ClassAssertion(:LetterOccurrence :S002_V170_W020_LO008)
+ObjectPropertyAssertion(:followedBy :S002_V170_W020_LO008 :S002_V170_W021_LO001)
+ObjectPropertyAssertion(:involveLetter :S002_V170_W020_LO008 :ا)
+ObjectPropertyAssertion(:precededBy :S002_V170_W020_LO008 :S002_V170_W020_LO003)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W020_LO008 "170"^^xsd:integer)
+DataPropertyAssertion(:involveSurahNo :S002_V170_W020_LO008 "2"^^xsd:integer)
+DataPropertyAssertion(:involveVerseNo :S002_V170_W020_LO008 "170"^^xsd:integer)
+DataPropertyAssertion(:involveWord :S002_V170_W020_LO008 "شَيْـًٔا"^^xsd:string)
 
 # Individual: :S002_V170_W021_LO001 (:S002_V170_W021_LO001)
 
@@ -1454,9 +1476,9 @@ ClassAssertion(:LetterOccurrence :S002_V170_W021_LO001)
 ObjectPropertyAssertion(:followedBy :S002_V170_W021_LO001 :S002_V170_W021_LO003)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W021_LO001 :َ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W021_LO001 :و)
-ObjectPropertyAssertion(:precededBy :S002_V170_W021_LO001 :S002_V170_W020_LO003)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W021_LO001 "172"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO001 "171"^^xsd:integer)
+ObjectPropertyAssertion(:precededBy :S002_V170_W021_LO001 :S002_V170_W020_LO008)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W021_LO001 "173"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO001 "172"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W021_LO001 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W021_LO001 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W021_LO001 "وَلَا"^^xsd:string)
@@ -1468,8 +1490,8 @@ ObjectPropertyAssertion(:followedBy :S002_V170_W021_LO003 :S002_V170_W021_LO005)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W021_LO003 :َ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W021_LO003 :ل)
 ObjectPropertyAssertion(:precededBy :S002_V170_W021_LO003 :S002_V170_W021_LO001)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W021_LO003 "174"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO003 "173"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W021_LO003 "175"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO003 "174"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W021_LO003 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W021_LO003 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W021_LO003 "وَلَا"^^xsd:string)
@@ -1480,7 +1502,7 @@ ClassAssertion(:LetterOccurrence :S002_V170_W021_LO005)
 ObjectPropertyAssertion(:followedBy :S002_V170_W021_LO005 :S002_V170_W022_LO001)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W021_LO005 :ا)
 ObjectPropertyAssertion(:precededBy :S002_V170_W021_LO005 :S002_V170_W021_LO003)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO005 "175"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W021_LO005 "176"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W021_LO005 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W021_LO005 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W021_LO005 "وَلَا"^^xsd:string)
@@ -1492,8 +1514,8 @@ ObjectPropertyAssertion(:followedBy :S002_V170_W022_LO001 :S002_V170_W022_LO003)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W022_LO001 :َ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO001 :ي)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO001 :S002_V170_W021_LO005)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO001 "178"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO001 "177"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO001 "179"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO001 "178"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO001 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO001 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO001 "يَهْتَدُونَ"^^xsd:string)
@@ -1505,8 +1527,8 @@ ObjectPropertyAssertion(:followedBy :S002_V170_W022_LO003 :S002_V170_W022_LO005)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W022_LO003 :ْ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO003 :ه)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO003 :S002_V170_W022_LO001)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO003 "180"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO003 "179"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO003 "181"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO003 "180"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO003 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO003 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO003 "يَهْتَدُونَ"^^xsd:string)
@@ -1518,8 +1540,8 @@ ObjectPropertyAssertion(:followedBy :S002_V170_W022_LO005 :S002_V170_W022_LO007)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W022_LO005 :َ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO005 :ت)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO005 :S002_V170_W022_LO003)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO005 "182"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO005 "181"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO005 "183"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO005 "182"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO005 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO005 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO005 "يَهْتَدُونَ"^^xsd:string)
@@ -1531,8 +1553,8 @@ ObjectPropertyAssertion(:followedBy :S002_V170_W022_LO007 :S002_V170_W022_LO009)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W022_LO007 :ُ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO007 :د)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO007 :S002_V170_W022_LO005)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO007 "184"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO007 "183"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO007 "185"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO007 "184"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO007 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO007 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO007 "يَهْتَدُونَ"^^xsd:string)
@@ -1543,7 +1565,7 @@ ClassAssertion(:LetterOccurrence :S002_V170_W022_LO009)
 ObjectPropertyAssertion(:followedBy :S002_V170_W022_LO009 :S002_V170_W022_LO010)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO009 :و)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO009 :S002_V170_W022_LO007)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO009 "185"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO009 "186"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO009 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO009 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO009 "يَهْتَدُونَ"^^xsd:string)
@@ -1554,8 +1576,8 @@ ClassAssertion(:LetterOccurrence :S002_V170_W022_LO010)
 ObjectPropertyAssertion(:involveHarakat :S002_V170_W022_LO010 :َ)
 ObjectPropertyAssertion(:involveLetter :S002_V170_W022_LO010 :ن)
 ObjectPropertyAssertion(:precededBy :S002_V170_W022_LO010 :S002_V170_W022_LO009)
-DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO010 "187"^^xsd:integer)
-DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO010 "186"^^xsd:integer)
+DataPropertyAssertion(:hasHaraktPosition :S002_V170_W022_LO010 "188"^^xsd:integer)
+DataPropertyAssertion(:hasLetterPosition :S002_V170_W022_LO010 "187"^^xsd:integer)
 DataPropertyAssertion(:involveSurahNo :S002_V170_W022_LO010 "2"^^xsd:integer)
 DataPropertyAssertion(:involveVerseNo :S002_V170_W022_LO010 "170"^^xsd:integer)
 DataPropertyAssertion(:involveWord :S002_V170_W022_LO010 "يَهْتَدُونَ"^^xsd:string)
@@ -1569,18 +1591,23 @@ ClassAssertion(Annotation(rdfs:label "ء"@ar) :Letter :ء)
 
 # Individual: :آ (:آ)
 
-ClassAssertion(:Item :آ)
 ClassAssertion(:Letter :آ)
 
 # Individual: :أ (:أ)
 
-ClassAssertion(:Item :أ)
 ClassAssertion(:Letter :أ)
+
+# Individual: :ؤ (:ؤ)
+
+ClassAssertion(:Letter :ؤ)
 
 # Individual: :إ (:إ)
 
-ClassAssertion(:Item :إ)
 ClassAssertion(:Letter :إ)
+
+# Individual: :ئ (:ئ)
+
+ClassAssertion(:Letter :ئ)
 
 # Individual: :ا (:ا)
 
@@ -1599,7 +1626,6 @@ ClassAssertion(:QalqalahLetter :ب)
 
 # Individual: :ة (:ة)
 
-ClassAssertion(:Item :ة)
 ClassAssertion(:Letter :ة)
 
 # Individual: :ت (:ت)
@@ -1724,6 +1750,10 @@ ClassAssertion(:IzharLetter :غ)
 ClassAssertion(:IzharShafawiLetter :غ)
 ClassAssertion(Annotation(rdfs:label "غ"@ar) :Letter :غ)
 
+# Individual: :ـ (:ـ)
+
+ClassAssertion(:Harakat :ـ)
+
 # Individual: :ف (:ف)
 
 ClassAssertion(:IkhfaLetter :ف)
@@ -1784,7 +1814,6 @@ ClassAssertion(:MaadLetter :و)
 
 # Individual: :ى (:ى)
 
-ClassAssertion(:Item :ى)
 ClassAssertion(:Letter :ى)
 
 # Individual: :ي (:ي)
@@ -1797,90 +1826,75 @@ ClassAssertion(:MaadLetter :ي)
 
 # Individual: :ً (:ً)
 
-ClassAssertion(:Harakat :ً)
-ClassAssertion(:Item :ً)
 ClassAssertion(Annotation(rdfs:comment "doo zabar") :Tanween :ً)
 
 # Individual: :ٌ (:ٌ)
 
-ClassAssertion(:Harakat :ٌ)
-ClassAssertion(:Item :ٌ)
 ClassAssertion(Annotation(rdfs:comment "doopeesh") :Tanween :ٌ)
 
 # Individual: :ٍ (:ٍ)
 
-ClassAssertion(:Harakat :ٍ)
-ClassAssertion(:Item :ٍ)
 ClassAssertion(Annotation(rdfs:comment "doo zair") :Tanween :ٍ)
 
 # Individual: :َ (:َ)
 
 ClassAssertion(Annotation(rdfs:comment "zaber") :Harakat :َ)
-ClassAssertion(:Item :َ)
 
 # Individual: :ُ (:ُ)
 
 ClassAssertion(Annotation(rdfs:comment "peesh") :Harakat :ُ)
-ClassAssertion(:Item :ُ)
 
 # Individual: :ِ (:ِ)
 
 ClassAssertion(Annotation(rdfs:comment "zair") :Harakat :ِ)
-ClassAssertion(:Item :ِ)
 
 # Individual: :ّ (:ّ)
 
 ClassAssertion(Annotation(rdfs:comment "shaddah") :Harakat :ّ)
-ClassAssertion(:Item :ّ)
 
 # Individual: :ْ (:ْ)
 
 ClassAssertion(Annotation(rdfs:comment "sakinah") :Harakat :ْ)
-ClassAssertion(:Item :ْ)
 
 # Individual: :ٓ (:ٓ)
 
 ClassAssertion(Annotation(rdfs:comment "Madd") :Harakat :ٓ)
-ClassAssertion(:Item :ٓ)
+
+# Individual: :ٔ (:ٔ)
+
+ClassAssertion(:Harakat :ٔ)
 
 # Individual: :ٰ (:ٰ)
 
 ClassAssertion(Annotation(rdfs:comment "Kharazabaer") :Harakat :ٰ)
-ClassAssertion(:Item :ٰ)
 
 # Individual: :ٱ (:ٱ)
 
-ClassAssertion(:Item :ٱ)
 ClassAssertion(Annotation(rdfs:comment "Hamzatulwasal"^^xsd:string) :Letter :ٱ)
+
+# Individual: :ۂ (:ۂ)
+
+ClassAssertion(:Letter :ۂ)
+
+# Individual: :۟ (:۟)
+
+ClassAssertion(:Harakat :۟)
 
 # Individual: :ۢ (:ۢ)
 
 ClassAssertion(Annotation(rdfs:comment "UpperMeem") :Harakat :ۢ)
-ClassAssertion(:Item :ۢ)
 
 # Individual: :ۥ (:ۥ)
 
 ClassAssertion(:Harakat :ۥ)
-ClassAssertion(:Item :ۥ)
 
 # Individual: :ۦ (:ۦ)
 
 ClassAssertion(:Harakat :ۦ)
-ClassAssertion(:Item :ۦ)
 
 # Individual: :ۭ (:ۭ)
 
 ClassAssertion(Annotation(rdfs:comment "Low meem") :Harakat :ۭ)
-ClassAssertion(:Item :ۭ)
-
-# Individual: <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> (<http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c>)
-
-ClassAssertion(:RuleOccurrence <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c>)
-ObjectPropertyAssertion(:hasRuleType <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> :Ikhfa)
-ObjectPropertyAssertion(:occurAt <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> :S002_V170_W006_LO003)
-DataPropertyAssertion(:hasLetterPosition <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> "40"^^xsd:integer)
-DataPropertyAssertion(:involveSurahNo <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> "2"^^xsd:integer)
-DataPropertyAssertion(:involveVerseNo <http://www.tajweedontology.org/ontologies/rules##08d47a25_4ad0_4a10_8bb1_e78c4fe9431c> "170"^^xsd:integer)
 
 
 DifferentIndividuals(:ء :ا :ب :ت :ث :ج :ح :خ :د :ذ :ر :ز :س :ش :ص :ض :ط :ظ :ع :غ :ف :ق :ك :ل :م :ن :ه :و :ي)
